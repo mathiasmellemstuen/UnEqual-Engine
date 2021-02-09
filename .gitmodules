@@ -1,0 +1,3 @@
+[submodule "core/MathUtilities"]
+	path = core/MathUtilities
+	url = https://github.com/mathiasmellemstuen/MathUtilities.git
