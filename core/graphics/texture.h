@@ -3,12 +3,18 @@
 
 #include <string>
 
-class Texture {
-    public:
-        void createFromFile(std::string filePath);
-        unsigned int getTextureId();
-    private:
-        unsigned int textureId;
+enum TextureType {
+    DIFFUSE,
+    SPECULAR
 };
 
+class Texture {
+    public:
+        void createFromFile(std::string filePath, TextureType type);
+        unsigned int getTextureId();
+        TextureType getTextureType();
+    private:
+        unsigned int textureId;
+        TextureType type;
+};
 #endif

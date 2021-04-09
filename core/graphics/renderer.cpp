@@ -1,7 +1,10 @@
 #include "renderer.h"
 #include "../log/log.h"
+#include "window.h"
 
 Renderer::Renderer(Window* window) {
+
+    Renderer::instance = this; 
     this->window = window; 
     this->running = true;
 
@@ -36,11 +39,24 @@ Renderer::Renderer(Window* window) {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); 
     glEnableVertexAttribArray(1); 
 };
-
-bool Renderer::nextRenderCall() {
-    return this->running; 
+int Renderer::addRenderFunction(RenderFunction function) {
+    renderFunctions.push_back(function); 
+};
+void Renderer::removeRenderFunction(int renderFunctionId) {
+    renderFunctions.erase(renderFunctions.begin() + renderFunctionId);
 };
 
+void Renderer::start() {
+
+    while(this->running && !glfwWindowShouldClose(Window::instance->window)) {
+        //Render loop
+
+        //Looping through every rendering functions and running them. 
+        for(RenderFunction function : renderFunctions) {
+            (*function)(); 
+        }
+    }
+}
 void Renderer::stop() {
     this->running = false; 
 };

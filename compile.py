@@ -19,7 +19,6 @@ os_input = int(input("OS: "))
 
 #os.system("ifconfig")
 
-
 def compile_win():
     print("Starting compilation of window codebase.")
 
@@ -31,10 +30,12 @@ def compile_linux():
     os.system("g++ -c -fPIC thirdparty/linux/glad/glad.c -o linux/build/glad.o")
     os.system("g++ -c -fPIC core/log/log.cpp -o linux/build/log.o")
     os.system("g++ -c -fPIC core/graphics/texture.cpp -o linux/build/texture.o")
+    os.system("g++ -c -fPIC core/graphics/camera.cpp -o linux/build/camera.o")
+    os.system("g++ -c -fPIC core/graphics/mesh.cpp -o linux/build/mesh.o")
+
 if os_input == 1:
     compile_win()
 elif os_input == 2:
     compile_mac()
 elif os_input == 3:
     compile_linux()
-

@@ -9,6 +9,7 @@
 #include "log.h"
 #include "texture.h"
 #include "window.h"
+#include "renderer.h"
 
 int main() {
     
@@ -56,30 +57,34 @@ int main() {
     -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 }; 
+    //Window class
+    log(INFO, "Starting intantiation of the window context.");  
+    Window window(800, 600, "Test vindu");
+    log(SUCCESS, "Sucessully instantiated the window context."); 
     
+    //Shader loading 
     Shader defaultShader ("shaders/default.vs", "shaders/default.fs"); 
-
-
-    Texture texture;
-    texture.createFromFile("textures/wall.jpeg"); 
     
+    //Texture loading
+    Texture texture;
+    texture.createFromFile("textures/wall.jpeg", DIFFUSE); 
     defaultShader.use(); 
     defaultShader.setInt("texture", 0); 
     glBindTexture(GL_TEXTURE_2D, texture.getTextureId()); 
 
-    Camera camera(800,600); 
+    //Loading camera class
+    Camera camera(800, 600); 
     camera.setShader(&defaultShader); 
     
-    //Looping while we are not closing.
-    while(!glfwWindowShouldClose(window)) {
-
-        process_input(window); 
+    //Starting to render
+    Renderer renderer(Window::instance);
+    
+    auto function = [&](){
         
-        //Rendering starts 
         glClearColor(0.2f,0.4f,0.2f,0.2f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        glBindVertexArray(VAO);
+        glBindVertexArray(Renderer::instance->VAO);
         
         camera.setProjection(glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f)); 
         camera.setView(glm::translate(camera.getView(), glm::vec3(0.0f, 0.0f, -0.01f))); 
@@ -93,9 +98,11 @@ int main() {
         
         defaultShader.use(); 
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(Window::instance->window);
         glfwPollEvents();
-    }
+    };
+
+    renderer.addRenderFunction(function);
     
     //Cleanup before terminating
     glfwTerminate(); 

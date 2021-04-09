@@ -18,11 +18,4 @@ class Mesh {
     private: 
         unsigned int VAO, VBO, EBO;
 };
-
-
-
-
-
-
-
 #endif

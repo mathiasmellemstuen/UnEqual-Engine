@@ -1,8 +1,8 @@
 #ifndef WINDOW
 #define WINDOW
 
-#include "../thirdparty/linux/glad/glad.h"
-#include "../thirdparty/linux/GLFW/glfw3.h"
+#include "../../thirdparty/glad/glad.h"
+#include "../../thirdparty/GLFW/glfw3.h"
 #include <string>
 
 class Window {

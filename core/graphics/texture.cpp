@@ -11,10 +11,11 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../thirdparty/linux/stb_image.h"
 
-void Texture::createFromFile(std::string filePath) {
-
+void Texture::createFromFile(std::string filePath, TextureType type) {
     log(INFO, "Loading and creating textures"); 
 
+    this->type = type;
+    
     glGenTextures(1, &textureId); 
     glBindTexture(GL_TEXTURE_2D, textureId);
     
@@ -42,5 +43,9 @@ void Texture::createFromFile(std::string filePath) {
 };
 
 unsigned int Texture::getTextureId() {
-    return textureId; 
+    return this->textureId; 
+};
+
+TextureType Texture::getTextureType() {
+    return this->type; 
 };
