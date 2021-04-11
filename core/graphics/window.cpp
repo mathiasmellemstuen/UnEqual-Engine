@@ -1,11 +1,10 @@
 #include "../../thirdparty/glad/glad.h"
 #include "../../thirdparty/GLFW/glfw3.h"
 #include <string>
-#include "log/log.h"
+#include "../log/log.h"
 #include "window.h"
 
 Window::Window(int width, int height, std::string title) {
-    instance = this; 
     this->width = width; 
     this->height = height; 
     this->title = title;
@@ -18,25 +17,30 @@ Window::Window(int width, int height, std::string title) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
     window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
     
+    glfwMakeContextCurrent(window);
+    
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        log(ERROR, "Could not initzialize glad. Exiting."); 
+    }
+
     //Adding viewport
     glViewport(0, 0, width, height);
+    
     //Adding framebuffer callback on size change.
-     
     auto lambdaFunc = [](GLFWwindow* window, int width, int height) {
-        Window::instance->setSize(width,height); 
+        //Window::getInstance()->setSize(width,height); 
         glViewport(0,0,width,height);
     };
     glfwSetFramebufferSizeCallback(window, lambdaFunc);
 
-
+    log(ERROR, "This gets callled "); 
     if (window == NULL) { 
         log(ERROR, "Failed to create GLFW window");
         glfwTerminate();
     }
-
-    glfwMakeContextCurrent(window);
 
     log(SUCCESS, "Instantiated GLDW"); 
 };

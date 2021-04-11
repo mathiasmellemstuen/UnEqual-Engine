@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "log.h"
+#include "../log/log.h"
 
 void Shader::use() {
     glUseProgram(id);

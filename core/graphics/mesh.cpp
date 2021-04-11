@@ -2,7 +2,7 @@
 #include <vector>
 #include "texture.h"
 #include "../log/log.h"
-#include "../../thirdparty/linux/glad/glad.h"
+#include "../../thirdparty/glad/glad.h"
 #include "vertex.h"
 
 Mesh::Mesh(std::vector<Vertex> verticies, std::vector<unsigned int> indices, std::vector<Texture> textures) {

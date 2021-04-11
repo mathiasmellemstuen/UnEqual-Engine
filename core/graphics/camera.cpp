@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include "shader.h"
-#include "log.h" 
+#include "../log/log.h" 
 
 void Camera::setShader(Shader* newShader) {
 

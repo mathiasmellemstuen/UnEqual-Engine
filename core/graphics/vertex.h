@@ -1,12 +1,12 @@
 #ifndef VERTEX
 #define VERTEX
 
-#include "../MathUtilities/DataStructure/vector.h"
+#include <glm/vec3.hpp>
 
 struct Vertex {
-    MathUtilities::DataStructure::Vector<3, int> position;
-    MathUtilities::DataStructure::Vector<3, int> normal; 
-    MathUtilities::DataStructure::Vector<2, int> textureCoordinates;
+    glm::vec3 position; 
+    glm::vec3 normal; 
+    glm::vec3 textureCoordinates;
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include "mesh.h"
 #include "shader.h"
 #include <string>
-#include <assimp/scene.h>
+//#include <assimp/scene.h>
 
 class Model {
     public: 
@@ -15,7 +15,7 @@ class Model {
     private:
         std::vector<Mesh> meshes; 
         std::string directory; 
-        void processNode(aiNode* node, const aiScene* scene);
-        Mesh processMesh(aiMesh* mesh, const aiScene* scene);
+//        void processNode(aiNode* node, const aiScene* scene);
+//        Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 };
 #endif

@@ -2,13 +2,11 @@
 #define UNEQUAL_RENDERER
 #include "window.h"
 #include <vector>
-
-using RenderFunction = []void ()->void;
+#include <functional>
 
 class Renderer {
     public:
-        static Renderer* instance;
-        int addRenderFunction(RenderFunction function); 
+        int addRenderFunction(const std::function<void()> &function);
         void removeRenderFunction(int renderFunctionId); 
         Renderer(Window* window);
         void start();
@@ -16,7 +14,7 @@ class Renderer {
         void setArrayBuffer(float* buffer);
         unsigned int VBO, VAO; 
     private:
-        std::vector<RenderFunction> renderFunctions;
+        std::vector<std::function<void()>> renderFunctions;
         Window* window;
         bool running; 
 };

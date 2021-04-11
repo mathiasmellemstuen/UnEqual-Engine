@@ -1,10 +1,10 @@
 #include "renderer.h"
 #include "../log/log.h"
 #include "window.h"
+#include <functional>
 
 Renderer::Renderer(Window* window) {
 
-    Renderer::instance = this; 
     this->window = window; 
     this->running = true;
 
@@ -39,21 +39,23 @@ Renderer::Renderer(Window* window) {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); 
     glEnableVertexAttribArray(1); 
 };
-int Renderer::addRenderFunction(RenderFunction function) {
+int Renderer::addRenderFunction(const std::function<void()> &function) {
     renderFunctions.push_back(function); 
+    return -1; 
 };
 void Renderer::removeRenderFunction(int renderFunctionId) {
     renderFunctions.erase(renderFunctions.begin() + renderFunctionId);
 };
 
 void Renderer::start() {
+    log(INFO, "Starting rendering loop."); 
 
-    while(this->running && !glfwWindowShouldClose(Window::instance->window)) {
+    while(this->running && !glfwWindowShouldClose(this->window->window)) {
         //Render loop
 
         //Looping through every rendering functions and running them. 
-        for(RenderFunction function : renderFunctions) {
-            (*function)(); 
+        for(std::function<void()> function : renderFunctions) {
+            function();
         }
     }
 }
