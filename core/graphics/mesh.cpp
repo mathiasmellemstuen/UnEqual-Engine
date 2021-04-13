@@ -10,6 +10,9 @@ Mesh::Mesh(std::vector<Vertex> verticies, std::vector<unsigned int> indices, std
     this->indices = indices;
     this->textures = textures;
 
+    setup(); 
+};
+void Mesh::setup() {
     log(INFO, "Mesh setup is starting.");
 
     glGenVertexArrays(1, &VAO);
@@ -36,12 +39,13 @@ Mesh::Mesh(std::vector<Vertex> verticies, std::vector<unsigned int> indices, std
     glBindVertexArray(0);
 
     log(SUCCESS, "Mesh setup is complete."); 
-};
+}
 void Mesh::draw(Shader &shader) {
 
    unsigned int diffuseNr = 1; 
    unsigned int specularNr = 1; 
 
+    log(ERROR, "Kommer hit!"); 
    for(unsigned int i = 0; i < this->textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i);
 
@@ -56,6 +60,7 @@ void Mesh::draw(Shader &shader) {
 
         std::string name = this->textures[i].getTextureType() == TextureType::DIFFUSE ? "Diffuse" : "Specular"; 
         shader.setFloat(("material." + name + number).c_str(), i);
+        log(ERROR, "material."+name+number);
         glBindTexture(GL_TEXTURE_2D, textures[i].getTextureId()); 
     
     }
@@ -66,4 +71,6 @@ void Mesh::draw(Shader &shader) {
 
     glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0); 
     glBindVertexArray(0);
+
+    glActiveTexture(GL_TEXTURE0); 
 };

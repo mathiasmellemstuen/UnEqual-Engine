@@ -36,13 +36,12 @@ Window::Window(int width, int height, std::string title) {
     };
     glfwSetFramebufferSizeCallback(window, lambdaFunc);
 
-    log(ERROR, "This gets callled "); 
     if (window == NULL) { 
         log(ERROR, "Failed to create GLFW window");
         glfwTerminate();
     }
 
-    log(SUCCESS, "Instantiated GLDW"); 
+    log(SUCCESS, "Instantiated GLFW"); 
 };
 void Window::processInput() {
 

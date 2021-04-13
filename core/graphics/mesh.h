@@ -11,11 +11,13 @@ class Mesh {
         std::vector<Vertex> verticies; 
         std::vector<unsigned int> indices; 
         std::vector<Texture> textures;
-        
+        unsigned int VAO; 
+
         Mesh(std::vector<Vertex> verticies, std::vector<unsigned int> indices, std::vector<Texture> textures);
         void draw(Shader &shader); 
 
     private: 
-        unsigned int VAO, VBO, EBO;
+        unsigned int VBO, EBO;
+        void setup(); 
 };
 #endif

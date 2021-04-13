@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "vector.h": "c",
+        "mesh.h": "c",
+        "vec3.hpp": "c",
+        "vector_float3_precision.hpp": "c",
+        "vector_float3.hpp": "c",
+        "texture.h": "c"
+    },
+    "files.exclude": {
+        ".gitmodules": true,
+        ".vscode": true
+    }
+}
