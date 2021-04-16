@@ -5,7 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C/C++: g++ build active file",
+            "name": "g++.exe - Build and debug active file win",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\game.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\MinGW64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: g++.exe build active file win",
+        },
+        {
+            "name": "C/C++: g++ build active file linux",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/game",
@@ -22,7 +43,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: g++ build active file",
+            "preLaunchTask": "C/C++: g++ build active file linux",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

@@ -4,22 +4,28 @@
 #include <vector>
 #include "shader.h"
 #include <string>
-#include <assimp/scene.h>
 #include "mesh.h"
 #include "texture.h"
+#include <glm/vec3.hpp>
+#include "vertex.h"
+#include <array>
 
+struct MeshData {
+    std::string name; 
+    std::vector<unsigned int> indices; 
+    std::vector<glm::vec3> vertices; 
+    std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> textureCoordinates;
+};
 
 class Model {
     public: 
-        Model(char* path); 
+        Model(std::string filePath); 
         void draw(Shader &shader);
     private:
         std::vector<Mesh> meshes; 
-        std::string directory;
-        void loadModel(std::string path); 
-        void processNode(aiNode* node, const aiScene* scene);
-        Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-        std::vector<Texture> loadMaterialTexture(aiMaterial *mat, aiTextureType type, std::string typeName); 
-        std::vector<Texture> loadedTextures; 
+        std::string filePath;
+        void loadModel(std::string filePath);
+        std::vector<Texture> loadMtllib(std::string filePath);
 };
 #endif

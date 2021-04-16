@@ -44,7 +44,10 @@ int main() {
     //Starting to render
 
     Model backpack("assets/models/backpack.obj");
+
     std::function<void()> function = [&](){
+        
+        window.processInput(); 
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -67,9 +70,9 @@ int main() {
     renderer.addRenderFunction(function);
     //Cleanup before terminating
     
-    renderer.start();
-    glfwTerminate(); 
+    renderer.start(); // This function is blocking
 
+    glfwTerminate(); 
     log(SUCCESS, "Application was successfully terminated");  
     return 0; 
 }

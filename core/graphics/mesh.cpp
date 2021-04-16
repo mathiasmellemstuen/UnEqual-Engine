@@ -4,8 +4,10 @@
 #include "../log/log.h"
 #include "../../thirdparty/glad/glad.h"
 #include "vertex.h"
+#include <string>
 
-Mesh::Mesh(std::vector<Vertex> verticies, std::vector<unsigned int> indices, std::vector<Texture> textures) {
+Mesh::Mesh(std::string name, std::vector<Vertex> verticies, std::vector<unsigned int> indices, std::vector<Texture> textures) {
+    this->name = name; 
     this->verticies = verticies; 
     this->indices = indices;
     this->textures = textures;
@@ -45,7 +47,6 @@ void Mesh::draw(Shader &shader) {
    unsigned int diffuseNr = 1; 
    unsigned int specularNr = 1; 
 
-    log(ERROR, "Kommer hit!"); 
    for(unsigned int i = 0; i < this->textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i);
 
