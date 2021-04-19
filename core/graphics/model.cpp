@@ -154,7 +154,7 @@ void Model::loadModel(std::string filePath) {
         if(line[0] == 'f') {
             
             while(std::regex_search(line, match, findNumericValueExpression)) {
-                meshDataList[meshDataList.size() - 1].indices.push_back(std::stoul(match[0])); 
+                meshDataList[meshDataList.size() - 1].faces.push_back(std::stoul(match[0])); 
                 line = match.suffix(); 
             }
             continue; 
@@ -166,13 +166,18 @@ void Model::loadModel(std::string filePath) {
     std::vector<Texture> textures = loadMtllib((std::string)match[0] + mtllibFileName);
     log(SUCCESS, "Loaded model.");
 
-
     for(int i = 0; i < meshDataList.size(); i++) {
+        
+        std::vector<Vertex> vertices;
 
-        std::vector<Vertex> vertices; 
-        Mesh mesh(meshDataList[i].name, meshDataList[i].vertices, meshDataList[i].indices, textures);
+        for(int j = 0; j < meshDataList[i].faces.size(); j+3) {
+            Vertex v;
+            v.position = meshDataList[i].vertices[meshDataList[i].faces[j]];
+            v.textureCoordinates = meshDataList[i].textureCoordinates[meshDataList[i].faces[j] + 1];
+            v.normal = meshDataList[i].normals[meshDataList[i].faces[j] + 2];
+        }
 
-
+        Mesh mesh(meshDataList[i].name, vertices, meshDataList[i].faces, textures);
     }
     //log(SUCCESS, "Loaded model " + filePath + " with: " + std::to_string(modelData.vertices.size()) + " vertices, " + std::to_string(modelData.normals.size()) + " normals, " + std::to_string(modelData.textureCoordinates.size()) + " texture coordinates and " + std::to_string(modelData.indices.size()) + " indices."); 
 };

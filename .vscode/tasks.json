@@ -44,8 +44,6 @@
                 "-lXrandr",
                 "-lXi",
                 "-ldl",
-                "-lGLESv2",
-                "-lassimp",
                 "-o",
                 "${workspaceFolder}/game"
             ],
