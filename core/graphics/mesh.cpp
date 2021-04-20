@@ -48,6 +48,7 @@ void Mesh::draw(Shader &shader) {
    unsigned int specularNr = 1; 
 
    for(unsigned int i = 0; i < this->textures.size(); i++) {
+        
         glActiveTexture(GL_TEXTURE0 + i);
 
         std::string number; 
@@ -61,15 +62,12 @@ void Mesh::draw(Shader &shader) {
 
         std::string name = this->textures[i].getTextureType() == TextureType::DIFFUSE ? "Diffuse" : "Specular"; 
         shader.setFloat(("material." + name + number).c_str(), i);
-        log(ERROR, "material."+name+number);
-        glBindTexture(GL_TEXTURE_2D, textures[i].getTextureId()); 
     
+        glUniform1i(glGetUniformLocation(shader.id, (name + number).c_str()), i);
+        glBindTexture(GL_TEXTURE_2D, textures[i].getTextureId()); 
+
     }
-
-    glActiveTexture(this->VAO); 
-
-    glBindVertexArray(this->VAO); 
-
+    glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0); 
     glBindVertexArray(0);
 

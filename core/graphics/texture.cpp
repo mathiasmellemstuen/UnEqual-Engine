@@ -28,8 +28,8 @@ void Texture::createFromFile(std::string filePath, TextureType type) {
    
     int width, height, nrChannels; 
 
-    stbi_set_flip_vertically_on_load(true); 
-     
+    stbi_set_flip_vertically_on_load(false); 
+    
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0); 
     
     //Now that the texture is bound, we can start generating it with the data we loaded. 
