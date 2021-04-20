@@ -16,6 +16,9 @@ void Texture::createFromFile(std::string filePath, TextureType type) {
 
     this->type = type;
     this->filePath = filePath; 
+    
+    log(INFO, "Filepath: " + filePath);
+    log(INFO, "Type: " + (std::string)(type == DIFFUSE ? "Diffuse" : "Specular")); 
 
     glGenTextures(1, &textureId); 
     glBindTexture(GL_TEXTURE_2D, textureId);
@@ -28,12 +31,17 @@ void Texture::createFromFile(std::string filePath, TextureType type) {
    
     int width, height, nrChannels; 
 
-    stbi_set_flip_vertically_on_load(false); 
-    
+    stbi_set_flip_vertically_on_load(false);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0); 
-    
+
+    log(INFO, "Height:" + std::to_string(height));
+    log(INFO, "Width: " + std::to_string(width));
+
     //Now that the texture is bound, we can start generating it with the data we loaded. 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+    log(INFO, "Reaching this."); 
 
     glActiveTexture(GL_TEXTURE0); 
     glGenerateMipmap(GL_TEXTURE_2D); 

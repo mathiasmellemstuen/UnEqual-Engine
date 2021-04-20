@@ -56,14 +56,15 @@ void Mesh::draw(Shader &shader) {
         if(this->textures[i].getTextureType() == TextureType::DIFFUSE) {
             number = std::to_string(diffuseNr++);
         }
+
         else if(this->textures[i].getTextureType() == TextureType::SPECULAR) {
             number = std::to_string(specularNr++);  
         }
 
-        std::string name = this->textures[i].getTextureType() == TextureType::DIFFUSE ? "Diffuse" : "Specular"; 
-        shader.setFloat(("material." + name + number).c_str(), i);
-    
-        glUniform1i(glGetUniformLocation(shader.id, (name + number).c_str()), i);
+        std::string name = this->textures[i].getTextureType() == TextureType::DIFFUSE ? "diffuse" : "specular"; 
+        shader.setFloat((name + number).c_str(), i);
+
+
         glBindTexture(GL_TEXTURE_2D, textures[i].getTextureId()); 
 
     }

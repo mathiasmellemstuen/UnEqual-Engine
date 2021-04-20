@@ -43,9 +43,14 @@ int main() {
     Renderer renderer(&window);
     //Starting to render
 
-    Model backpack("assets/models/backpack.obj");
+   // Model backpack("assets/models/backpack.obj");
 
     glm::mat4 model = glm::mat4(1);
+    glm::mat4 model2 = glm::mat4(1);
+    model2 = glm::translate(model, glm::vec3(-3.0f,0.0f,0.0f)); 
+    
+
+    Model cube("assets/models/cube/cube.obj");
     std::function<void()> function = [&](){
 
         window.processInput(); 
@@ -63,7 +68,11 @@ int main() {
         model = glm::rotate(model, 0.01f, glm::vec3(0.0, 1.0, 0.0));
 
         camera.setModel(model);
-        backpack.draw(defaultShader); 
+       // backpack.draw(defaultShader);
+        cube.draw(defaultShader); 
+        camera.setModel(model2); 
+       // backpack.draw(defaultShader); 
+        
         glfwSwapBuffers(window.window);
         glfwPollEvents();
     };

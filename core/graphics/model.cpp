@@ -17,6 +17,8 @@ std::vector<Texture> Model::loadMtllib(std::string filePath) {
     
     log(INFO, "Starting loading mtllib file. ");
     log(INFO, "Filepath: " + filePath); 
+    
+    std::vector<Texture> textures; 
 
     std::ifstream file(filePath); 
     std::string line; 
@@ -25,47 +27,37 @@ std::vector<Texture> Model::loadMtllib(std::string filePath) {
     std::regex map_KsExpression("^map_Ks");
     std::smatch match;
    
-    std::string mapKd; 
-    std::string mapBump; 
-    std::string mapKs; 
-    
+    std::regex folderExpression("^.+\\/");
+    std::regex_search(filePath, match, folderExpression); 
+    std::string folderPath = (std::string)match[0]; 
+
     while(std::getline(file, line)) {
 
         if(std::regex_search(line, map_kdExpression)) {
             line.erase(0,7);
-            mapKd = line; 
+            
+            Texture texture;
+            texture.createFromFile(folderPath + line, DIFFUSE);
+
+            textures.push_back(texture); 
             continue; 
         }
 
         if(std::regex_search(line, map_BumpExpression)) {
             line.erase(0,9);
-            mapBump = line; 
             continue; 
         }
 
         if(std::regex_search(line, map_KsExpression)) {
             line.erase(0,7);
-            mapKs = line; 
+
+            Texture texture;
+            texture.createFromFile(folderPath + line, SPECULAR);
+
+            textures.push_back(texture); 
             continue; 
         }
     }
-
-    std::regex folderExpression("^.+\\/");
-    std::regex_search(filePath, match, folderExpression);
-    mapKd = (std::string)match[0] + mapKd;
-    mapBump = (std::string)match[0] + mapBump;
-    mapKs = (std::string)match[0] + mapKs;  
-    
-    log(INFO, mapKd); 
-    log(INFO, mapBump); 
-    log(INFO, mapKs);
-
-    Texture diffuse;
-    diffuse.createFromFile(mapKd, DIFFUSE); 
-
-    Texture specular; 
-    specular.createFromFile(mapKs, SPECULAR);
-    std::vector<Texture> textures = {diffuse, specular}; 
 
     return textures; 
 }
