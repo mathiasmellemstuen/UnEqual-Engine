@@ -3,16 +3,20 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file win",
-            "command": "C:\\MinGW64\\bin\\g++.exe",
+            "command": "C:\\mingw64\\bin\\g++.exe",
             "args": [
                 "-g",
+                "-m64",
                 "-std=c++17",
                 "-I./thirdparty",
+                "-IC:\\VulkanSDK\\1.2.170.0\\Include",
+                "-LC:\\VulkanSDK\\1.2.170.0\\Bin",
                 "-L./lib",
                 "core/log/log.cpp",
                 "core/graphics/*.cpp" 
                 ,"thirdparty/glad/glad.c", "game.cpp",
                 "-lglfw3dll",
+                "c:\\Windows\\System32\\vulkan-1.dll",
                 "-o",
                 "${workspaceFolder}\\game.exe"
             ],
