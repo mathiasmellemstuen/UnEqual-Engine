@@ -2,6 +2,7 @@
 #include "../log/log.h"
 #include "window.h"
 #include <functional>
+#include <chrono>
 
 Renderer::Renderer(Window* window) {
 
@@ -50,8 +51,14 @@ void Renderer::removeRenderFunction(int renderFunctionId) {
 void Renderer::start() {
     log(INFO, "Starting rendering loop."); 
 
+    std::chrono::high_resolution_clock::time_point lastTick = std::chrono::high_resolution_clock::now();
+
     while(this->running && !glfwWindowShouldClose(this->window->window)) {
         //Render loop
+
+        std::chrono::duration<float, std::milli> dt = std::chrono::high_resolution_clock::now() - lastTick;
+        lastTick = std::chrono::high_resolution_clock::now(); 
+        deltaTime = dt.count();
 
         //Looping through every rendering functions and running them. 
         for(std::function<void()> function : renderFunctions) {

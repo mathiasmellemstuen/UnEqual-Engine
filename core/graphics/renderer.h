@@ -6,6 +6,7 @@
 
 class Renderer {
     public:
+        float deltaTime;
         int addRenderFunction(const std::function<void()> &function);
         void removeRenderFunction(int renderFunctionId); 
         Renderer(Window* window);
@@ -17,6 +18,7 @@ class Renderer {
         std::vector<std::function<void()>> renderFunctions;
         Window* window;
         bool running; 
+        float lastTick;
 };
 
 #endif
