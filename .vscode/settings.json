@@ -97,7 +97,8 @@
         "cinttypes": "c",
         "typeindex": "c",
         "valarray": "c",
-        "variant": "c"
+        "variant": "c",
+        "steam_api_common.h": "c"
     },
     "files.exclude": {
         ".gitmodules": true,

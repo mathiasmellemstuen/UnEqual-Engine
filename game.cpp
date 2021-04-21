@@ -17,14 +17,34 @@
 #include <glm/vec3.hpp>
 #include "core/graphics/model.h"
 #include <time.h>
+#include <steam/steam_api.h>
 
 int main() {
-
+    
     //Window class
     log(INFO, "Starting intantiation of the window context.");  
     Window window(800, 600, "Test vindu");
     log(SUCCESS, "Sucessully instantiated the window context."); 
     
+
+    if(SteamAPI_Init()) {
+    
+        log(SUCCESS, "Steam API started.");
+
+        if(SteamInput()->Init()) {
+            log(SUCCESS, "Successfully initiated steamInput!");
+            const char *name = SteamFriends()->GetPersonaName();
+            log(INFO, "Player name: " + (std::string)name); 
+
+        } else {
+            log(ERROR, "Failed to init Steam Input."); 
+        }
+    }
+    else {
+
+        log(ERROR, "Failed to initialize steam api."); 
+    }
+
     //Shader loading 
     Shader defaultShader ("assets/shaders/default.vs", "assets/shaders/default.fs"); 
     
@@ -42,8 +62,6 @@ int main() {
     Model cube("assets/models/cube/cube.obj");
 
     std::function<void()> function = [&](){
-
-        window.processInput(); 
 
         defaultShader.use(); 
         std::string s = "time";
