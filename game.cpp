@@ -16,6 +16,7 @@
 #include "core/graphics/vertex.h"
 #include <glm/vec3.hpp>
 #include "core/graphics/model.h"
+#include <time.h>
 
 int main() {
 
@@ -50,12 +51,18 @@ int main() {
     model2 = glm::translate(model, glm::vec3(-3.0f,0.0f,0.0f)); 
     
 
+    float i = 0.0; 
     Model cube("assets/models/cube/cube.obj");
     std::function<void()> function = [&](){
 
         window.processInput(); 
 
         defaultShader.use(); 
+        std::string s = "time";
+        defaultShader.setFloat(s.c_str(),i);
+        i = i + 0.1f; 
+
+        log(INFO, std::to_string(i)); 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
         glPolygonMode(GL_FRONT, GL_LINE);

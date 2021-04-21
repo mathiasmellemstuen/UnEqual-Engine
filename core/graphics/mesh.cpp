@@ -62,7 +62,7 @@ void Mesh::draw(Shader &shader) {
         }
 
         std::string name = this->textures[i].getTextureType() == TextureType::DIFFUSE ? "diffuse" : "specular"; 
-        shader.setFloat((name + number).c_str(), i);
+        shader.setInt((name + number).c_str(), i);
 
 
         glBindTexture(GL_TEXTURE_2D, textures[i].getTextureId()); 
