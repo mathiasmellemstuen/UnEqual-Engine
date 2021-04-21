@@ -58,7 +58,7 @@ void Renderer::start() {
 
         std::chrono::duration<float, std::milli> dt = std::chrono::high_resolution_clock::now() - lastTick;
         lastTick = std::chrono::high_resolution_clock::now(); 
-        deltaTime = dt.count();
+        deltaTime = dt.count() / 1000;
 
         //Looping through every rendering functions and running them. 
         for(std::function<void()> function : renderFunctions) {
