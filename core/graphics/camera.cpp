@@ -7,40 +7,8 @@
 #include "../log/log.h" 
 #include <string>
 
-void Camera::setShader(Shader* newShader) {
-
-    shader = newShader;
-    
-    modelLocation = glGetUniformLocation(shader->id, "model"); 
-    viewLocation = glGetUniformLocation(shader->id, "view"); 
-    projectionLocation = glGetUniformLocation(shader->id, "projection"); 
-
-}
-
-void Camera::setModel(glm::mat4 newModel) {
-    model = newModel;
-    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model)); 
-}
-void Camera::setProjection(glm::mat4 newProjection) {
-    projection = newProjection;
-    glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
-}
-void Camera::setView(glm::mat4 newView) {
-    view = newView; 
-    glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-}
-glm::mat4 Camera::getModel() {
-    return model; 
-}
-glm::mat4 Camera::getView() {
-    return view; 
-}
-glm::mat4 Camera::getProjection() {
-    return projection; 
-}
 
 Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
-
 
     log(INFO, "Creating a camera."); 
 
@@ -66,6 +34,25 @@ Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
     log(SUCCESS, "Camera setup is complete."); 
 }
 
+void Camera::setShader(Shader* newShader) {
+
+    shader = newShader;
+    modelLocation = glGetUniformLocation(shader->id, "model"); 
+    viewLocation = glGetUniformLocation(shader->id, "view"); 
+    projectionLocation = glGetUniformLocation(shader->id, "projection"); 
+}
+void Camera::setModel(glm::mat4 newModel) {
+    model = newModel;
+    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model)); 
+}
+void Camera::setProjection(glm::mat4 newProjection) {
+    projection = newProjection;
+    glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+}
+void Camera::setView(glm::mat4 newView) {
+    view = newView; 
+    glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+}
 void Camera::setRotation(glm::vec3 r) {
     rotation = r; 
 
@@ -78,12 +65,20 @@ void Camera::setRotation(glm::vec3 r) {
     cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront)); 
     setView(glm::lookAt(position, position + cameraFront, cameraUp));
 };
-
 void Camera::setPosition(glm::vec3 pos) {
     position = pos;
     setView(view); 
 };
 
+glm::mat4 Camera::getModel() {
+    return model; 
+}
+glm::mat4 Camera::getView() {
+    return view; 
+}
+glm::mat4 Camera::getProjection() {
+    return projection; 
+}
 glm::vec3 Camera::getPosition() {
     return position; 
 }
