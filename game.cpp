@@ -32,9 +32,9 @@ int main() {
     
     //Shader loading 
     Shader defaultShader ("assets/shaders/default.vs", "assets/shaders/default.fs"); 
-    
+    Shader strangeShader("assets/shaders/strangeFigure.vs", "assets/shaders/strangeFigure.fs"); 
     //Loading camera class
-    Camera camera(800, 600, &defaultShader); 
+    Camera camera(800, 600, &strangeShader); 
     
     Renderer renderer(&window);
 
@@ -44,9 +44,15 @@ int main() {
     float time = 0; 
 
     Model cube("assets/models/cube/cube.obj");
+
+    Model strangeFigure("assets/models/strangeFigure/strangeFigure.obj");
+
+
     std::function<void()> function = [&](){
         input.update(); 
         defaultShader.use(); 
+        strangeShader.use();
+        strangeShader.setVec3("lightPos", camera.getPosition());
         std::string s = "time";
         defaultShader.setFloat(s.c_str(),i);
         i = i + 1.0f * renderer.deltaTime;
@@ -72,8 +78,10 @@ int main() {
         time += renderer.deltaTime; 
         camera.setModel(model);
 
-        cube.draw(defaultShader); 
-        
+        //cube.draw(defaultShader); 
+
+
+        strangeFigure.draw(strangeShader);
         glfwSwapBuffers(window.window);
         glfwPollEvents();
     };
