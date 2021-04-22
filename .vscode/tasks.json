@@ -10,9 +10,12 @@
                 "-I./thirdparty",
                 "-L./lib",
                 "core/log/log.cpp",
-                "core/graphics/*.cpp" 
+                "core/input/*.cpp",
+                "core/graphics/*.cpp"
                 ,"thirdparty/glad/glad.c", "game.cpp",
                 "-lglfw3dll",
+                "-L./",
+                "-lsteam_api64",
                 "-o",
                 "${workspaceFolder}\\game.exe"
             ],
@@ -35,9 +38,14 @@
             "args": [
                 "thirdparty/glad/glad.c",
                 "core/graphics/*.cpp",
+                "core/input/*.cpp",
                 "core/log/log.cpp",
                 "game.cpp",
                 "-lglfw3",
+                "-I./thirdparty",
+                "-L./",
+                "-Wl,-rpath",".",
+                "-lsteam_api",
                 "-lGL",
                 "-lX11",
                 "-lpthread",

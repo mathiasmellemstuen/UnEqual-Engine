@@ -97,10 +97,11 @@
         "cinttypes": "c",
         "typeindex": "c",
         "valarray": "c",
-        "variant": "c"
+        "variant": "c",
+        "steam_api_common.h": "c",
+        "*.rh": "cpp"
     },
     "files.exclude": {
-        ".gitmodules": true,
-        ".vscode": true
+        ".gitmodules": true
     }
 }
