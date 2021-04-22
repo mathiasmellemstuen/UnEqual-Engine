@@ -59,12 +59,11 @@ void Input::setup() {
 void Input::update() {
 
 
-    int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
-
+    int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
     if(present == 1) {
 
         int axisCount; 
-        const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axisCount);
+        const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_2, &axisCount);
         leftStick.x = abs(axes[0]) > 0.1f ? axes[0] : 0.0f; 
         leftStick.y = abs(axes[1]) > 0.1f ? axes[1] : 0.0f; 
         rightStick.x = abs(axes[2]) > 0.1f ? axes[2] : 0.0f;  

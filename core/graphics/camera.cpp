@@ -57,6 +57,7 @@ Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
     cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); 
     rotation = glm::vec3(-90.0f, 0.0f, 0.0f);
+    
     setProjection(glm::perspective(glm::radians(90.0f), (float)width / (float)height, 0.1f, 100.0f)); 
     setModel(model); 
     setView(view); 
@@ -66,12 +67,21 @@ Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
 }
 
 void Camera::setRotation(glm::vec3 r) {
-    
     rotation = r; 
+
+    glm::vec3 dirV;
+    dirV.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    dirV.y = sin(glm::radians(-rotation.y));
+    dirV.z = sin(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
+    cameraFront = glm::normalize(dirV);
+    cameraRight = glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f,1.0f,0.0f)));  
+    cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront)); 
+    setView(glm::lookAt(position, position + cameraFront, cameraUp));
 };
 
 void Camera::setPosition(glm::vec3 pos) {
     position = pos;
+    setView(view); 
 };
 
 glm::vec3 Camera::getPosition() {
@@ -80,23 +90,10 @@ glm::vec3 Camera::getPosition() {
 glm::vec3 Camera::getRotation() {
     return rotation; 
 }
-void Camera::moveDirection(glm::vec3 direction, float distance) {
-    glm::vec3 currentDirection = glm::normalize(rotation);
-    //position += direction.z * currentDirection * distance; 
-}
-void Camera::update() {
-    
-    glm::vec3 dirV;
-    dirV.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
-    //dirV.y = sin(glm::radians(rotation.x));
-    dirV.z = sin(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
-    cameraFront = glm::normalize(dirV);
-    cameraRight = glm::normalize(glm::cross(cameraFront, cameraUp));  
-    cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront)); 
-    //log(INFO, "X: " + std::to_string(dirV.x) + " Y: " + std::to_string(dirV.y) + " Z: " + std::to_string(dirV.z));  
 
-    glm::mat4 v = glm::lookAt(position, position + cameraFront, cameraUp);
-    //cameraUp = glm::cross(cameraUp, cameraFront);
-    log(INFO, "X: " + std::to_string(cameraUp.x) + " Y: " + std::to_string(cameraUp.y) + " Z: " + std::to_string(cameraUp.z));  
-    setView(v);
+void Camera::move(glm::vec3 dir, glm::vec3 rot, float speed) {
+    
+    setRotation(getRotation() + rot); 
+    setPosition(getPosition() + cameraFront * -dir.z * speed);
+    setPosition(getPosition() + cameraRight * dir.x * speed); 
 }

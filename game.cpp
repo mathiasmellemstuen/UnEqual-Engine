@@ -66,10 +66,8 @@ int main() {
         //model = glm::rotate(model, 2 * 3.14f * renderer.deltaTime, glm::vec3(0.0, 1.0, 0.0));
 
         //camera.setPosition(glm::vec3(20.0f * -input.leftStick.y * renderer.deltaTime, 0.0f, 20.0f * input.leftStick.x * renderer.deltaTime));
-        camera.setRotation(camera.getRotation() + glm::vec3(20 * input.rightStick.x * renderer.deltaTime, 20 * input.rightStick.y * renderer.deltaTime, 0.0f));
-        //camera.moveDirection(glm::vec3(input.leftStick.x, 0.0f, input.leftStick.y), 20.0f * renderer.deltaTime); 
+        camera.move(glm::vec3(input.leftStick.x, 0.0f, input.leftStick.y), glm::vec3(90.0f * input.rightStick.x * renderer.deltaTime, 90.0f * input.rightStick.y * renderer.deltaTime, 0.0f), 20.0f * renderer.deltaTime);
         time += renderer.deltaTime; 
-        camera.update(); 
         camera.setModel(model);
 
         cube.draw(defaultShader); 

@@ -31,8 +31,7 @@ class Camera {
         void setProjection(glm::mat4 newProjection); 
         void setRotation(glm::vec3 r);
         void setPosition(glm::vec3 pos);
-        void moveDirection(glm::vec3 direction, float distance); 
-        void update(); 
+        void move(glm::vec3 direction, glm::vec3 rotation, float speed);
         glm::mat4 getModel(); 
         glm::mat4 getView();
         glm::mat4 getProjection(); 

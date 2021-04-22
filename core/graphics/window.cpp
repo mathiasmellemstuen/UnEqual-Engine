@@ -42,6 +42,8 @@ Window::Window(int width, int height, std::string title) {
         glfwTerminate();
     }
 
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
     log(SUCCESS, "Instantiated GLFW"); 
 };
 void Window::setSize(int width, int height) {
