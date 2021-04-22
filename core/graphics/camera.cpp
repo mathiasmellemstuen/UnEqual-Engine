@@ -91,4 +91,5 @@ void Camera::move(glm::vec3 dir, glm::vec3 rot, float speed) {
     setRotation(getRotation() + rot); 
     setPosition(getPosition() + cameraFront * -dir.z * speed);
     setPosition(getPosition() + cameraRight * dir.x * speed); 
+    setPosition(getPosition() + cameraUp * dir.y * speed); 
 }

@@ -67,6 +67,9 @@ void Input::update() {
         leftStick.x = abs(axes[0]) > 0.1f ? axes[0] : 0.0f; 
         leftStick.y = abs(axes[1]) > 0.1f ? axes[1] : 0.0f; 
         rightStick.x = abs(axes[2]) > 0.1f ? axes[2] : 0.0f;  
-        rightStick.y = abs(axes[3]) > 0.1f ? axes[3] : 0.0f; 
+        rightStick.y = abs(axes[3]) > 0.1f ? axes[3] : 0.0f;
+
+        int buttonCount; 
+        buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &buttonCount);
     }
 };
