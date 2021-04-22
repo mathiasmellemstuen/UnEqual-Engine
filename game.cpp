@@ -18,39 +18,23 @@
 #include "core/graphics/model.h"
 #include <time.h>
 #include <steam/steam_api.h>
+#include "core/input/input.h"
 
 int main() {
     
     //Window class
     log(INFO, "Starting intantiation of the window context.");  
-    Window window(800, 600, "Test vindu");
+    Window window(2560, 1440, "Test vindu");
     log(SUCCESS, "Sucessully instantiated the window context."); 
+
+    Input input;
+    input.setup(); 
     
-
-    if(SteamAPI_Init()) {
-    
-        log(SUCCESS, "Steam API started.");
-
-        if(SteamInput()->Init()) {
-            log(SUCCESS, "Successfully initiated steamInput!");
-            const char *name = SteamFriends()->GetPersonaName();
-            log(INFO, "Player name: " + (std::string)name); 
-
-        } else {
-            log(ERROR, "Failed to init Steam Input."); 
-        }
-    }
-    else {
-
-        log(ERROR, "Failed to initialize steam api."); 
-    }
-
     //Shader loading 
     Shader defaultShader ("assets/shaders/default.vs", "assets/shaders/default.fs"); 
     
     //Loading camera class
-    Camera camera(800, 600); 
-    camera.setShader(&defaultShader); 
+    Camera camera(2560, 1440, &defaultShader); 
     
     Renderer renderer(&window);
 
@@ -60,9 +44,8 @@ int main() {
     float time = 0; 
 
     Model cube("assets/models/cube/cube.obj");
-
     std::function<void()> function = [&](){
-
+        input.update(); 
         defaultShader.use(); 
         std::string s = "time";
         defaultShader.setFloat(s.c_str(),i);
@@ -73,11 +56,16 @@ int main() {
         glPolygonMode(GL_FRONT, GL_LINE);
         glPolygonMode(GL_BACK, GL_LINE);
         glBindVertexArray(renderer.VAO);
-        
-        camera.setProjection(glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f)); 
-        camera.setView(glm::translate(camera.getView(), glm::vec3(0.0f, 0.0f, -3.0f * renderer.deltaTime))); 
+
+        //camera.setPosition(camera.getPosition() + glm::vec3(0.0f, 0.0f, -1.0f * renderer.deltaTime)); 
+        //camera.setView(glm::translate(camera.getView(), glm::vec3(20.0f * -input.leftStick.x * renderer.deltaTime, 0.0f, 20.0f * -input.leftStick.y * renderer.deltaTime)));
+        //glm::mat4 cameraModel = camera.getModel(); 
+        //cameraModel = glm::rotate(cameraModel, 2.0f * 3.14f * renderer.deltaTime, glm::vec3(-input.rightStick.x,-input.rightStick.y, 0.0f));
+        //camera.setModel(cameraModel);
         //model = glm::translate(model, glm::vec3(0.0f,0.0f,0.0f));
-        model = glm::rotate(model, 2 * 3.14f * renderer.deltaTime, glm::vec3(0.0, 1.0, 0.0));
+        //model = glm::rotate(model, 2 * 3.14f * renderer.deltaTime, glm::vec3(0.0, 1.0, 0.0));
+        float speed = 2.0f * 3.14f * renderer.deltaTime; 
+        //camera.rotate(glm::vec2(-input.rightStick.x, -input.rightStick.y), glm::vec2(speed, speed));
 
         time += renderer.deltaTime; 
 

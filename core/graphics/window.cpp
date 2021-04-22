@@ -36,19 +36,16 @@ Window::Window(int width, int height, std::string title) {
     };
     glfwSetFramebufferSizeCallback(window, lambdaFunc);
 
+
     if (window == NULL) { 
         log(ERROR, "Failed to create GLFW window");
         glfwTerminate();
     }
 
+    glfwMaximizeWindow(window); 
+
     log(SUCCESS, "Instantiated GLFW"); 
 };
-void Window::processInput() {
-
-    //Checking if the escape key was pressed and closing the window if that's the case. 
-    if(glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(this->window, true); 
-}; 
 void Window::setSize(int width, int height) {
     this->width = width;
     this->height = height; 

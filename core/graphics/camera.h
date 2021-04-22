@@ -7,7 +7,8 @@
 #include "shader.h" 
 
 class Camera {
-    private: 
+    private:
+        glm::vec3 position;
         int width;
         int height;
         unsigned int modelLocation;
@@ -19,16 +20,17 @@ class Camera {
         Shader* shader; 
 
     public:
-        Camera(int screenWidth, int screenHeight);
-        
+        Camera(int screenWidth, int screenHeight, Shader* shader);
         void setShader(Shader* newShader); 
         void setModel(glm::mat4 newModel); 
         void setView(glm::mat4 newView); 
         void setProjection(glm::mat4 newProjection); 
-        
+        void rotate(glm::vec2 direction, glm::vec2 speed);
+        void setPosition(glm::vec3 pos); 
         glm::mat4 getModel(); 
         glm::mat4 getView();
         glm::mat4 getProjection(); 
+        glm::vec3 getPosition(); 
 
 }; 
 #endif

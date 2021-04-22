@@ -8,7 +8,6 @@
 class Window {
     public:
         Window(int width, int height, std::string title);
-        void processInput();
         void setSize(int width, int height); 
         GLFWwindow* window;
     private:

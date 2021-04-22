@@ -38,22 +38,46 @@ glm::mat4 Camera::getProjection() {
     return projection; 
 }
 
-Camera::Camera(int screenWidth, int screenHeight) {
+Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
 
 
     log(INFO, "Creating a camera."); 
-    
+
+    setShader(s);  
+
+    shader->use(); 
     width = screenWidth; 
     height = screenHeight; 
     
     model = glm::mat4(1.0); 
     view = glm::mat4(1.0); 
-    projection = glm::mat4(1.0);  
-    setProjection(glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f)); 
-    setModel(glm::mat4(1.0)); 
-    //    shader->set_mat4("model", model); 
-    //    shader->set_mat4("projection", projection); 
-    //    shader->set_mat4("view", view); 
-
+    projection = glm::mat4(1.0);
+    position = glm::vec3(0.0, 0.0, 0.0); 
+    setProjection(glm::perspective(glm::radians(90.0f), (float)width / (float)height, 0.1f, 100.0f)); 
+    setModel(model); 
+    setView(view); 
+    setPosition(position);  
+    
+    rotate(glm::vec2(10.0,0.0), glm::vec2(0.0,0.0));
     log(SUCCESS, "Camera setup is complete."); 
+}
+
+void Camera::rotate(glm::vec2 direction, glm::vec2 speed) {
+    glm::vec3 dirV;
+    dirV.x = cos(glm::radians(direction.y)) * cos(glm::radians(direction.x));
+    dirV.y = sin(glm::radians(direction.x));
+    dirV.z = sin(glm::radians(direction.y)) * cos(glm::radians(direction.x));
+    glm::vec3 cameraFront = glm::normalize(dirV);
+    
+    glm::mat4 v = glm::lookAt(position, position + cameraFront, glm::vec3(0.0f,1.0f,0.0f));
+    setView(v);
+};
+
+void Camera::setPosition(glm::vec3 pos) {
+    position = pos;
+    setView(glm::translate(glm::mat4(1.0), pos)); 
+};
+
+glm::vec3 Camera::getPosition() {
+    return position; 
 }
