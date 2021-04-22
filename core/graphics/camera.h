@@ -8,7 +8,11 @@
 
 class Camera {
     private:
+        glm::vec3 rotation;
         glm::vec3 position;
+        glm::vec3 cameraFront;
+        glm::vec3 cameraUp;
+        glm::vec3 cameraRight;
         int width;
         int height;
         unsigned int modelLocation;
@@ -25,12 +29,16 @@ class Camera {
         void setModel(glm::mat4 newModel); 
         void setView(glm::mat4 newView); 
         void setProjection(glm::mat4 newProjection); 
-        void rotate(glm::vec2 direction, glm::vec2 speed);
-        void setPosition(glm::vec3 pos); 
+        void setRotation(glm::vec3 r);
+        void setPosition(glm::vec3 pos);
+        void moveDirection(glm::vec3 direction, float distance); 
+        void update(); 
         glm::mat4 getModel(); 
         glm::mat4 getView();
         glm::mat4 getProjection(); 
         glm::vec3 getPosition(); 
+        glm::vec3 getRotation(); 
+        
 
 }; 
 #endif

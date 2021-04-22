@@ -42,8 +42,6 @@ Window::Window(int width, int height, std::string title) {
         glfwTerminate();
     }
 
-    glfwMaximizeWindow(window); 
-
     log(SUCCESS, "Instantiated GLFW"); 
 };
 void Window::setSize(int width, int height) {

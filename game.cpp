@@ -24,7 +24,7 @@ int main() {
     
     //Window class
     log(INFO, "Starting intantiation of the window context.");  
-    Window window(2560, 1440, "Test vindu");
+    Window window(800, 600, "Test vindu");
     log(SUCCESS, "Sucessully instantiated the window context."); 
 
     Input input;
@@ -34,12 +34,12 @@ int main() {
     Shader defaultShader ("assets/shaders/default.vs", "assets/shaders/default.fs"); 
     
     //Loading camera class
-    Camera camera(2560, 1440, &defaultShader); 
+    Camera camera(800, 600, &defaultShader); 
     
     Renderer renderer(&window);
 
     glm::mat4 model = glm::mat4(1);
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, -5.0f)); 
+    model = glm::translate(model, glm::vec3(1.0f, 0.0f, -5.0f)); 
     float i = 0.0; 
     float time = 0; 
 
@@ -64,11 +64,12 @@ int main() {
         //camera.setModel(cameraModel);
         //model = glm::translate(model, glm::vec3(0.0f,0.0f,0.0f));
         //model = glm::rotate(model, 2 * 3.14f * renderer.deltaTime, glm::vec3(0.0, 1.0, 0.0));
-        float speed = 2.0f * 3.14f * renderer.deltaTime; 
-        //camera.rotate(glm::vec2(-input.rightStick.x, -input.rightStick.y), glm::vec2(speed, speed));
 
+        //camera.setPosition(glm::vec3(20.0f * -input.leftStick.y * renderer.deltaTime, 0.0f, 20.0f * input.leftStick.x * renderer.deltaTime));
+        camera.setRotation(camera.getRotation() + glm::vec3(20 * input.rightStick.x * renderer.deltaTime, 20 * input.rightStick.y * renderer.deltaTime, 0.0f));
+        //camera.moveDirection(glm::vec3(input.leftStick.x, 0.0f, input.leftStick.y), 20.0f * renderer.deltaTime); 
         time += renderer.deltaTime; 
-
+        camera.update(); 
         camera.setModel(model);
 
         cube.draw(defaultShader); 

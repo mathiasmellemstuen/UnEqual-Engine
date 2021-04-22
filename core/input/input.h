@@ -3,16 +3,12 @@
 
 #include <string>
 #include <steam/steam_api.h>
-
-struct AnalogValuePair {
-    float x; 
-    float y; 
-};
+#include <glm/vec2.hpp>
 
 class Input {
     public:
-        AnalogValuePair leftStick; 
-        AnalogValuePair rightStick;
+        glm::vec2 leftStick; 
+        glm::vec2 rightStick;
         void setup();
         void update(); 
 };

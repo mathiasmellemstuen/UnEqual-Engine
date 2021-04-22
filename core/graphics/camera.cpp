@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include "shader.h"
 #include "../log/log.h" 
+#include <string>
 
 void Camera::setShader(Shader* newShader) {
 
@@ -52,32 +53,50 @@ Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
     model = glm::mat4(1.0); 
     view = glm::mat4(1.0); 
     projection = glm::mat4(1.0);
-    position = glm::vec3(0.0, 0.0, 0.0); 
+    position = glm::vec3(0.0, 0.0, 3.0);
+    cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); 
+    rotation = glm::vec3(-90.0f, 0.0f, 0.0f);
     setProjection(glm::perspective(glm::radians(90.0f), (float)width / (float)height, 0.1f, 100.0f)); 
     setModel(model); 
     setView(view); 
     setPosition(position);  
-    
-    rotate(glm::vec2(10.0,0.0), glm::vec2(0.0,0.0));
+   
     log(SUCCESS, "Camera setup is complete."); 
 }
 
-void Camera::rotate(glm::vec2 direction, glm::vec2 speed) {
-    glm::vec3 dirV;
-    dirV.x = cos(glm::radians(direction.y)) * cos(glm::radians(direction.x));
-    dirV.y = sin(glm::radians(direction.x));
-    dirV.z = sin(glm::radians(direction.y)) * cos(glm::radians(direction.x));
-    glm::vec3 cameraFront = glm::normalize(dirV);
+void Camera::setRotation(glm::vec3 r) {
     
-    glm::mat4 v = glm::lookAt(position, position + cameraFront, glm::vec3(0.0f,1.0f,0.0f));
-    setView(v);
+    rotation = r; 
 };
 
 void Camera::setPosition(glm::vec3 pos) {
     position = pos;
-    setView(glm::translate(glm::mat4(1.0), pos)); 
 };
 
 glm::vec3 Camera::getPosition() {
     return position; 
+}
+glm::vec3 Camera::getRotation() {
+    return rotation; 
+}
+void Camera::moveDirection(glm::vec3 direction, float distance) {
+    glm::vec3 currentDirection = glm::normalize(rotation);
+    //position += direction.z * currentDirection * distance; 
+}
+void Camera::update() {
+    
+    glm::vec3 dirV;
+    dirV.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    //dirV.y = sin(glm::radians(rotation.x));
+    dirV.z = sin(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
+    cameraFront = glm::normalize(dirV);
+    cameraRight = glm::normalize(glm::cross(cameraFront, cameraUp));  
+    cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront)); 
+    //log(INFO, "X: " + std::to_string(dirV.x) + " Y: " + std::to_string(dirV.y) + " Z: " + std::to_string(dirV.z));  
+
+    glm::mat4 v = glm::lookAt(position, position + cameraFront, cameraUp);
+    //cameraUp = glm::cross(cameraUp, cameraFront);
+    log(INFO, "X: " + std::to_string(cameraUp.x) + " Y: " + std::to_string(cameraUp.y) + " Z: " + std::to_string(cameraUp.z));  
+    setView(v);
 }
