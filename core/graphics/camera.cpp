@@ -40,7 +40,13 @@ void Camera::setShader(Shader* newShader) {
     modelLocation = glGetUniformLocation(shader->id, "model"); 
     viewLocation = glGetUniformLocation(shader->id, "view"); 
     projectionLocation = glGetUniformLocation(shader->id, "projection"); 
+
+       setProjection(getProjection());
+    setModel(model); 
+    setView(view); 
+    setPosition(position);  
 }
+
 void Camera::setModel(glm::mat4 newModel) {
     model = newModel;
     glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model)); 

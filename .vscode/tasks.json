@@ -16,6 +16,7 @@
                 "-lglfw3dll",
                 "-L./",
                 "-lsteam_api64",
+                "-lfreetype",
                 "-o",
                 "${workspaceFolder}\\game.exe"
             ],

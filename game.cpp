@@ -19,12 +19,14 @@
 #include <time.h>
 #include <steam/steam_api.h>
 #include "core/input/input.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 int main() {
     
     //Window class
     log(INFO, "Starting intantiation of the window context.");  
-    Window window(800, 600, "Test vindu");
+    Window window(2560, 1440, "Test vindu");
     log(SUCCESS, "Sucessully instantiated the window context."); 
 
     Input input;
@@ -34,28 +36,43 @@ int main() {
     Shader defaultShader ("assets/shaders/default.vs", "assets/shaders/default.fs"); 
     Shader strangeShader("assets/shaders/strangeFigure.vs", "assets/shaders/strangeFigure.fs"); 
     //Loading camera class
-    Camera camera(800, 600, &strangeShader); 
+
+    Camera camera(2560, 1440, &strangeShader); 
     
     Renderer renderer(&window);
 
     glm::mat4 model = glm::mat4(1);
     model = glm::translate(model, glm::vec3(1.0f, 0.0f, -5.0f)); 
-    float i = 0.0; 
-    float time = 0; 
+
+    glm::mat4 model2 = glm::mat4(1); 
+    model2 = glm::translate(model2, glm::vec3(10.0f, 0.0f, -5.0f)); 
+    
+    float time = 0.0; 
 
     Model cube("assets/models/cube/cube.obj");
 
     Model strangeFigure("assets/models/strangeFigure/strangeFigure.obj");
 
+    FT_Library ft;
+    if (FT_Init_FreeType(&ft)) {
+        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+        return -1;
+    }
 
+    FT_Face face;
+    if (FT_New_Face(ft, "assets/fonts/Roboto/Roboto-Black.ttf", 0, &face)) {
+        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;  
+        return -1;
+    }
+    FT_Set_Pixel_Sizes(face, 0, 48);
+
+    if (FT_Load_Char(face, 'X', FT_LOAD_RENDER)) {
+        std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;  
+        return -1;
+    }
     std::function<void()> function = [&](){
-        input.update(); 
-        defaultShader.use(); 
-        strangeShader.use();
-        strangeShader.setVec3("lightPos", camera.getPosition());
-        std::string s = "time";
-        defaultShader.setFloat(s.c_str(),i);
-        i = i + 1.0f * renderer.deltaTime;
+
+        input.update();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -63,25 +80,27 @@ int main() {
         glPolygonMode(GL_BACK, GL_LINE);
         glBindVertexArray(renderer.VAO);
 
-        //camera.setPosition(camera.getPosition() + glm::vec3(0.0f, 0.0f, -1.0f * renderer.deltaTime)); 
-        //camera.setView(glm::translate(camera.getView(), glm::vec3(20.0f * -input.leftStick.x * renderer.deltaTime, 0.0f, 20.0f * -input.leftStick.y * renderer.deltaTime)));
-        //glm::mat4 cameraModel = camera.getModel(); 
-        //cameraModel = glm::rotate(cameraModel, 2.0f * 3.14f * renderer.deltaTime, glm::vec3(-input.rightStick.x,-input.rightStick.y, 0.0f));
-        //camera.setModel(cameraModel);
-        //model = glm::translate(model, glm::vec3(0.0f,0.0f,0.0f));
-        //model = glm::rotate(model, 2 * 3.14f * renderer.deltaTime, glm::vec3(0.0, 1.0, 0.0));
+        strangeShader.use();
+        camera.setShader(&strangeShader);
+        strangeShader.setVec3("lightPos", camera.getPosition());
+        camera.setModel(model);
+        strangeFigure.draw(strangeShader);
 
-        //camera.setPosition(glm::vec3(20.0f * -input.leftStick.y * renderer.deltaTime, 0.0f, 20.0f * input.leftStick.x * renderer.deltaTime));
+
+
         float speed =  20.0f * renderer.deltaTime;
         float y = input.buttons[7] == GLFW_PRESS ? 1.0f : input.buttons[6] == GLFW_PRESS ? -1.0f : 0.0f;
         camera.move(glm::vec3(input.leftStick.x, y, input.leftStick.y), glm::vec3(90.0f * input.rightStick.x * renderer.deltaTime, 90.0f * input.rightStick.y * renderer.deltaTime, 0.0f), speed);
-        time += renderer.deltaTime; 
-        camera.setModel(model);
 
-        //cube.draw(defaultShader); 
+        std::string s = "time";
+        time = time + 1.0f * renderer.deltaTime;
 
+        defaultShader.use(); 
+        defaultShader.setFloat(s.c_str(),time);
+        camera.setShader(&defaultShader); 
+        camera.setModel(model2); 
+        cube.draw(defaultShader);
 
-        strangeFigure.draw(strangeShader);
         glfwSwapBuffers(window.window);
         glfwPollEvents();
     };
