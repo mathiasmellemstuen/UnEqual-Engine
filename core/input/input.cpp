@@ -1,5 +1,4 @@
 #include "input.h"
-#include <steam/steam_api.h>
 #include "../log/log.h"
 #include <GLFW/glfw3.h>
 #include <stdlib.h>

@@ -2,7 +2,6 @@
 #define INPUT
 
 #include <string>
-#include <steam/steam_api.h>
 #include <glm/vec2.hpp>
 #include <vector>
 

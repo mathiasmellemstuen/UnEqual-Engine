@@ -17,7 +17,6 @@
 #include <glm/vec3.hpp>
 #include "core/graphics/model.h"
 #include <time.h>
-#include <steam/steam_api.h>
 #include "core/input/input.h"
 #include "core/graphics/text.h"
 
