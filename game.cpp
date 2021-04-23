@@ -19,14 +19,16 @@
 #include <time.h>
 #include <steam/steam_api.h>
 #include "core/input/input.h"
-#include <ft2build.h>
-#include FT_FREETYPE_H
+#include "core/graphics/text.h"
+
+#define WIDTH 2560
+#define HEIGHT 1440
 
 int main() {
     
     //Window class
     log(INFO, "Starting intantiation of the window context.");  
-    Window window(2560, 1440, "Test vindu");
+    Window window(WIDTH, HEIGHT, "Test vindu");
     log(SUCCESS, "Sucessully instantiated the window context."); 
 
     Input input;
@@ -37,7 +39,7 @@ int main() {
     Shader strangeShader("assets/shaders/strangeFigure.vs", "assets/shaders/strangeFigure.fs"); 
     //Loading camera class
 
-    Camera camera(2560, 1440, &strangeShader); 
+    Camera camera(WIDTH, HEIGHT, &strangeShader); 
     
     Renderer renderer(&window);
 
@@ -52,24 +54,10 @@ int main() {
     Model cube("assets/models/cube/cube.obj");
 
     Model strangeFigure("assets/models/strangeFigure/strangeFigure.obj");
+    
+    Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
+    Text text(WIDTH, HEIGHT);
 
-    FT_Library ft;
-    if (FT_Init_FreeType(&ft)) {
-        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
-        return -1;
-    }
-
-    FT_Face face;
-    if (FT_New_Face(ft, "assets/fonts/Roboto/Roboto-Black.ttf", 0, &face)) {
-        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;  
-        return -1;
-    }
-    FT_Set_Pixel_Sizes(face, 0, 48);
-
-    if (FT_Load_Char(face, 'X', FT_LOAD_RENDER)) {
-        std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;  
-        return -1;
-    }
     std::function<void()> function = [&](){
 
         input.update();
@@ -100,6 +88,8 @@ int main() {
         camera.setShader(&defaultShader); 
         camera.setModel(model2); 
         cube.draw(defaultShader);
+
+        text.draw(textShader, "fps: " + std::to_string(int(1.0f / renderer.deltaTime)), 0.0f,HEIGHT - 40.0f,0.3f,glm::vec3(0.0f,1.0f,0.0f)); 
 
         glfwSwapBuffers(window.window);
         glfwPollEvents();
