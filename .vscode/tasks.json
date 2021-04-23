@@ -13,6 +13,7 @@
                 "core/input/*.cpp",
                 "core/graphics/*.cpp",
                 "core/glad.c",
+                "snake/*.cpp",
                 "snake.cpp",
                 "-lglfw3dll",
                 "-lfreetype",
