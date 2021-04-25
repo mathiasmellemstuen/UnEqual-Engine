@@ -6,8 +6,9 @@
 #include "texture.h"
 #include "shader.h"
 #include <string>
+#include "../sharedlib.h"
 
-class Mesh {
+class DLLEXPORT Mesh {
     public:
         std::string name; 
         std::vector<Vertex> verticies; 

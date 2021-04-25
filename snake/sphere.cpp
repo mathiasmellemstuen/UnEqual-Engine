@@ -13,24 +13,150 @@ Mesh generateSphere() {
     std::vector<unsigned int> indices; 
     std::vector<Texture> textures;
 
-    int M = 10; //Latitude
-    int N = 10;  //Longitude
     const double pi = 3.14159265358979323846;
-    unsigned int i = 0; 
-    for(int m = 0; m < M; m++) {
-        for(int n = 0; n < N; n++) {
-            Vertex v;
-            float x = sin(pi * (m / M)) * cos(2 * pi * (n / N));
-            float y = sin(pi * (m / M)) * sin(2 * pi * (n / N));
-            float z = cos(pi * (m / M));
+    
+    float t = (1.0f + sqrt(5.0f) / 2.0f) / 2.0f;
+    
+    Vertex v1;
+    v1.position = glm::vec3(-1.0f, t, 0.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
 
-            v.position = glm::vec3(x * 10.0f,y * 10.0f,z * 10.0f); 
-            v.normal = glm::vec3(x,y,z); 
+    Vertex v2;
+    v1.position = glm::vec3(1.0f, t, 0.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
 
-            indices.push_back(i);
-            i++; 
-            verticies.push_back(v);
-        }
-    }
+    Vertex v3;
+    v1.position = glm::vec3(-1.0f, -t, 0.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v4;
+    v1.position = glm::vec3(1.0f, -t, 0.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v5;
+    v1.position = glm::vec3(0.0f, -1.0f, t);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v6;
+    v1.position = glm::vec3(0.0f, 1.0f, t);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v7;
+    v1.position = glm::vec3(0.0f, -1.0f, -t);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v8;
+    v1.position = glm::vec3(0.0f, 1.0f, -t);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v9;
+    v1.position = glm::vec3(t, 0.0f, -1.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v10;
+    v1.position = glm::vec3(t, 0.0f, 1.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v11;
+    v1.position = glm::vec3(-t, 0.0f, -1.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    Vertex v12;
+    v1.position = glm::vec3(-t, 0.0f, 1.0f);
+    v1.normal = glm::vec3(0.0f,0.0f,1.0f);
+
+    verticies.push_back(v1);
+    verticies.push_back(v2);
+    verticies.push_back(v3);
+    verticies.push_back(v4);
+    verticies.push_back(v5);
+    verticies.push_back(v6);
+    verticies.push_back(v7);
+    verticies.push_back(v8);
+    verticies.push_back(v9);
+    verticies.push_back(v10);
+    verticies.push_back(v11);
+    verticies.push_back(v12);
+
+    indices.push_back(0);
+    indices.push_back(11);
+    indices.push_back(5);
+
+    indices.push_back(0);
+    indices.push_back(5);
+    indices.push_back(1);
+
+    indices.push_back(0);
+    indices.push_back(1);
+    indices.push_back(7);
+
+    indices.push_back(0);
+    indices.push_back(7);
+    indices.push_back(10);
+
+    indices.push_back(0);
+    indices.push_back(10);
+    indices.push_back(11);
+
+    indices.push_back(1);
+    indices.push_back(5);
+    indices.push_back(9);
+
+    indices.push_back(5);
+    indices.push_back(11);
+    indices.push_back(4);
+
+    indices.push_back(11);
+    indices.push_back(10);
+    indices.push_back(2);
+
+    indices.push_back(10);
+    indices.push_back(7);
+    indices.push_back(6);
+
+    indices.push_back(7);
+    indices.push_back(1);
+    indices.push_back(8);
+
+    indices.push_back(3);
+    indices.push_back(9);
+    indices.push_back(4);
+
+    indices.push_back(3);
+    indices.push_back(4);
+    indices.push_back(2);
+
+    indices.push_back(3);
+    indices.push_back(2);
+    indices.push_back(6);
+
+    indices.push_back(3);
+    indices.push_back(6);
+    indices.push_back(8);
+
+    indices.push_back(3);
+    indices.push_back(8);
+    indices.push_back(9);
+
+    indices.push_back(4);
+    indices.push_back(9);
+    indices.push_back(5);
+
+    indices.push_back(2);
+    indices.push_back(4);
+    indices.push_back(11);
+
+    indices.push_back(6);
+    indices.push_back(2);
+    indices.push_back(10);
+
+    indices.push_back(8);
+    indices.push_back(6);
+    indices.push_back(7);
+
+    indices.push_back(8);
+    indices.push_back(8);
+    indices.push_back(1);
+
     return Mesh(name, verticies, indices, textures);
 };

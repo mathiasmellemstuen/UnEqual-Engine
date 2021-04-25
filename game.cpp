@@ -58,15 +58,13 @@ int main() {
     Text text(WIDTH, HEIGHT);
 
     std::function<void()> function = [&](){
-
+        
         input.update();
-
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
         glPolygonMode(GL_FRONT, GL_LINE);
         glPolygonMode(GL_BACK, GL_LINE);
         glBindVertexArray(renderer.VAO);
-
         strangeShader.use();
         camera.setShader(&strangeShader);
         strangeShader.setVec3("lightPos", camera.getPosition());

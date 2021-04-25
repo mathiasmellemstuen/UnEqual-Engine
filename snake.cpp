@@ -54,10 +54,9 @@ int main() {
 
         strangeShader.use();
         strangeShader.setVec3("lightPos", camera.getPosition());
-        m.draw(strangeShader);
         camera.setModel(model); 
         cube.draw(strangeShader); 
-
+        //m.draw(strangeShader);
         camera.setShader(&strangeShader); 
         float speed =  20.0f * renderer.deltaTime;
         float y = input.buttons[7] == GLFW_PRESS ? 1.0f : input.buttons[6] == GLFW_PRESS ? -1.0f : 0.0f;

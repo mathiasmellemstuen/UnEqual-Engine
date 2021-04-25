@@ -3,12 +3,15 @@
 
 #include <string>
 
+#include "../sharedlib.h"
+
 enum TextureType {
     DIFFUSE,
     SPECULAR
 };
 
-class Texture {
+
+class DLLEXPORT Texture {
     public:
         void createFromFile(std::string filePath, TextureType type);
         unsigned int getTextureId();
