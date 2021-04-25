@@ -5,11 +5,11 @@
 #include "../log/log.h"
 #include "texture.h"
 
-#include "../../thirdparty/glad/glad.h"
-#include "../../thirdparty/GLFW/glfw3.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "../../thirdparty/stb_image.h"
+#include <stb_image.h>
 
 void Texture::createFromFile(std::string filePath, TextureType type) {
     log(INFO, "Loading and creating textures"); 

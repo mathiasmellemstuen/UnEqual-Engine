@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "g++.exe - Build and debug active file win",
+            "name": "WINDOWS game debugging (No compilation)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\game.exe",
@@ -23,7 +23,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: g++.exe build active file win",
+            "preLaunchTask": "",
         },
         {
             "name": "C/C++: g++ build active file linux",

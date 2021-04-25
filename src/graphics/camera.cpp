@@ -7,8 +7,6 @@
 #include "../log/log.h" 
 #include <string>
 
-
-
 Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
 
     log(INFO, "Creating a camera."); 

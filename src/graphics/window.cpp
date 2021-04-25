@@ -1,5 +1,6 @@
-#include "../../thirdparty/glad/glad.h"
-#include "../../thirdparty/GLFW/glfw3.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <string>
 #include "../log/log.h"
 #include "window.h"

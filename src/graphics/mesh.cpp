@@ -2,7 +2,7 @@
 #include <vector>
 #include "texture.h"
 #include "../log/log.h"
-#include "../../thirdparty/glad/glad.h"
+#include <glad/glad.h>
 #include "vertex.h"
 #include <string>
 

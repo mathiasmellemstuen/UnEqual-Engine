@@ -1,24 +1,24 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "core/graphics/shader.h"
+#include "src/graphics/shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "core/graphics/camera.h"
-#include "core/log/log.h"
-#include "core/graphics/texture.h"
-#include "core/graphics/window.h"
-#include "core/graphics/renderer.h"
+#include "src/graphics/camera.h"
+#include "src/log/log.h"
+#include "src/graphics/texture.h"
+#include "src/graphics/window.h"
+#include "src/graphics/renderer.h"
 #include <functional>
 #include <vector>
-#include "core/graphics/mesh.h"
-#include "core/graphics/vertex.h"
+#include "src/graphics/mesh.h"
+#include "src/graphics/vertex.h"
 #include <glm/vec3.hpp>
-#include "core/graphics/model.h"
+#include "src/graphics/model.h"
 #include <time.h>
-#include "core/input/input.h"
-#include "core/graphics/text.h"
+#include "src/input/input.h"
+#include "src/graphics/text.h"
 
 #define WIDTH 2560
 #define HEIGHT 1440

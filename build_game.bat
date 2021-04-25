@@ -1,0 +1,1 @@
+g++ -std=c++17 -I./include -o game.exe game.cpp -L./ -lUnEqualEngine -L./lib -lglfw3dll -lfreetype
