@@ -11,11 +11,11 @@
                 "-L./lib",
                 "core/log/log.cpp",
                 "core/input/*.cpp",
-                "core/graphics/*.cpp"
-                ,"thirdparty/glad/glad.c", "game.cpp",
+                "core/graphics/*.cpp",
+                "core/glad.c",
+                "snake/*.cpp",
+                "snake.cpp",
                 "-lglfw3dll",
-                "-L./",
-                "-lsteam_api64",
                 "-lfreetype",
                 "-o",
                 "${workspaceFolder}\\game.exe"

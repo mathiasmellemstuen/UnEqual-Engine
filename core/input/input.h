@@ -5,7 +5,9 @@
 #include <glm/vec2.hpp>
 #include <vector>
 
-class Input {
+#include "../sharedlib.h"
+
+class DLLEXPORT Input {
     public:
         glm::vec2 leftStick; 
         glm::vec2 rightStick;

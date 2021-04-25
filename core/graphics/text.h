@@ -9,6 +9,9 @@
 #include "renderer.h"
 
 #include FT_FREETYPE_H
+
+#include "../sharedlib.h"
+
 struct Character {
     unsigned int textureId; 
     glm::ivec2 size; 
@@ -16,7 +19,8 @@ struct Character {
     unsigned int advance; 
 };
 
-class Text {
+
+class DLLEXPORT Text {
     public:
 
         void draw(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);

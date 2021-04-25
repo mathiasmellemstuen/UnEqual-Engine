@@ -5,6 +5,8 @@
 #include <iostream>
 #include <ctime>
 
+#include "../sharedlib.h"
+
 enum LogLevel {
     INFO = 1,
     SUCCESS = 2,
@@ -12,6 +14,7 @@ enum LogLevel {
     ERROR = 4
 };
 
-void log(LogLevel logLevel, std::string text);
+
+void DLLEXPORT log(LogLevel logLevel, std::string text);
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
+#include "../sharedlib.h"
 
 struct Vertex {
     glm::vec3 position; 

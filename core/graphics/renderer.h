@@ -3,8 +3,9 @@
 #include "window.h"
 #include <vector>
 #include <functional>
+#include "../sharedlib.h"
 
-class Renderer {
+class DLLEXPORT Renderer {
     public:
         float deltaTime;
         int addRenderFunction(const std::function<void()> &function);

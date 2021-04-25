@@ -9,6 +9,7 @@
 #include <glm/vec3.hpp>
 #include "vertex.h"
 #include <array>
+#include "../sharedlib.h"
 
 struct MeshData {
     std::string name; 
@@ -18,7 +19,8 @@ struct MeshData {
     std::vector<glm::vec2> textureCoordinates;
 };
 
-class Model {
+
+class DLLEXPORT Model {
     public: 
         Model(std::string filePath); 
         void draw(Shader &shader);

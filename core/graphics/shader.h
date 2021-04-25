@@ -7,8 +7,9 @@
 #include <sstream>
 #include <iostream>
 #include <glm/glm.hpp>
+#include "../sharedlib.h"
 
-class Shader {
+class DLLEXPORT Shader {
     public: 
         unsigned int id; //The program ID
 

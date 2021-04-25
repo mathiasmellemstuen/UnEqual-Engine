@@ -8,6 +8,7 @@
 #include <string>
 
 
+
 Camera::Camera(int screenWidth, int screenHeight, Shader* s) {
 
     log(INFO, "Creating a camera."); 
@@ -41,7 +42,7 @@ void Camera::setShader(Shader* newShader) {
     viewLocation = glGetUniformLocation(shader->id, "view"); 
     projectionLocation = glGetUniformLocation(shader->id, "projection"); 
 
-       setProjection(getProjection());
+    setProjection(getProjection());
     setModel(model); 
     setView(view); 
     setPosition(position);  

@@ -5,8 +5,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "shader.h"
+#include "../sharedlib.h"
 
-class Camera {
+class DLLEXPORT Camera {
     private:
         glm::vec3 rotation;
         glm::vec3 position;

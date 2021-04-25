@@ -56,7 +56,6 @@ void Input::setup() {
 };
 
 void Input::update() {
-
     int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
     if(present == 1) {
 
