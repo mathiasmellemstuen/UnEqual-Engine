@@ -20,8 +20,8 @@
 #include "src/input/input.h"
 #include "src/graphics/text.h"
 
-#define WIDTH 2560
-#define HEIGHT 1440
+#define WIDTH 1920
+#define HEIGHT 1080
 
 int main() {
     
@@ -31,7 +31,6 @@ int main() {
     log(SUCCESS, "Sucessully instantiated the window context."); 
 
     Input input;
-    input.setup(); 
     
     //Shader loading 
     Shader defaultShader ("assets/shaders/default.vs", "assets/shaders/default.fs"); 
@@ -57,6 +56,20 @@ int main() {
     Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
     Text text(WIDTH, HEIGHT);
 
+    float ySpeed = 0.0f; 
+
+    std::function<void(float* value, int maxCount)> movementListener = [&](float* values, int maxCount) {
+        
+        float speed =  20.0f * renderer.deltaTime;
+        camera.move(glm::vec3(values[0], ySpeed, values[1]), glm::vec3(180.0f * values[2] * renderer.deltaTime, 180.0f * values[3] * renderer.deltaTime, 0.0f), speed);
+    };
+    
+    std::function<void(bool* value, int maxCount)> moveYdirection = [&](bool* values, int maxCount) {
+        ySpeed = values[7] ? 1.0f : values[6] ? -1.0f : 0.0f; 
+    };
+    input.addDigitalListener(moveYdirection); 
+    input.addAnalogListener(movementListener); 
+
     std::function<void()> function = [&](){
         
         input.update();
@@ -73,10 +86,8 @@ int main() {
 
 
 
-        float speed =  20.0f * renderer.deltaTime;
-        float y = input.buttons[7] == GLFW_PRESS ? 1.0f : input.buttons[6] == GLFW_PRESS ? -1.0f : 0.0f;
-        camera.move(glm::vec3(input.leftStick.x, y, input.leftStick.y), glm::vec3(90.0f * input.rightStick.x * renderer.deltaTime, 90.0f * input.rightStick.y * renderer.deltaTime, 0.0f), speed);
-
+        //float y = input.buttons[7] == GLFW_PRESS ? 1.0f : input.buttons[6] == GLFW_PRESS ? -1.0f : 0.0f;
+        //camera.move(glm::vec3(input.leftStick.x, y, input.leftStick.y), glm::vec3(90.0f * input.rightStick.x * renderer.deltaTime, 90.0f * input.rightStick.y * renderer.deltaTime, 0.0f), speed);
         std::string s = "time";
         time = time + 1.0f * renderer.deltaTime;
 

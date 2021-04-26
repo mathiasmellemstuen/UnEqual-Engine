@@ -12,14 +12,13 @@
 class DLLEXPORT Input {
     public:
         void update();
+        void addAnalogListener(std::function<void(float* value, int maxCount)> listener);
+        void addDigitalListener(std::function<void(bool* value, int maxCount)> listener);
+        void removeAnalogListener(std::function<void(bool* value, int maxCount)> listener);
+        void removeDigitalListener(std::function<void(bool* value, int maxCount)> listener);
     private:
         const float analogValueCutoffValue = 0.15f;
-        const unsigned char* buttons;
-        std::map<int, std::function<void(float value)>> analogListeners; 
-        std::map<int, std::function<void(bool value)>> digitalListeners;
-        void addAnalogListener(int analogTrigger, std::function<void(float value)> listener);
-        void addDigitalListener(int digitalButton, std::function<void(float value)> listener);
-        void removeAnalogListener(std::function<void(float value)> listener);
-        void removeDigitalListener(std::function<void(float value)> listener);
+        std::vector<std::function<void(float* value, int maxCount)>> analogListeners; 
+        std::vector<std::function<void(bool* value, int maxCount)>> digitalListeners; 
 };
 #endif

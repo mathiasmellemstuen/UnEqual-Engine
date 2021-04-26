@@ -5,41 +5,49 @@
 #include <glm/vec2.hpp>
 #include <vector>
 #include <map>
+#include <algorithm>
 
-void Input::addAnalogListener(int analogTrigger, std::function<void(float value)> listener) {
-
-    for(std::map<int,std::function<void(float value)>>::iterator it = analogListeners.begin(); it != analogListeners.end(); ++it) {
-        if((it->second)* == listener*)
-            
-    }
+void Input::addAnalogListener(std::function<void(float* values, int maxCount)> listener) {
+    analogListeners.push_back(listener); 
 };
-void Input::addDigitalListener(int digitalButton, std::function<void(float value)> listener) {
-
+void Input::addDigitalListener(std::function<void(bool* values, int maxCount)> listener) {
+    digitalListeners.push_back(listener); 
 };
-void Input::removeAnalogListener(std::function<void(float value)> listener) {
+
+void Input::removeAnalogListener(std::function<void(bool* value, int maxCount)> listener) {
 
 };
-void Input::removeDigitalListener(std::function<void(float value)> listener) {
+void Input::removeDigitalListener(std::function<void(bool* value, int maxCount)> listener) {
 
 };
 void Input::update() {
-    int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
+    int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
     if(present == 1) {
 
         int axisCount; 
-        const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_2, &axisCount);
+        const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axisCount);
+
+        float values[axisCount]; 
 
         for(int i = 0; i < axisCount; i++) {
+            values[i] = abs(axes[i]) > analogValueCutoffValue ? axes[i] - analogValueCutoffValue : 0.0f; 
+        }
 
-            float value = abs(axes[i]) > analogValueCutoffValue ? axes[0] - analogValueCutoffValue : 0.0f;
-            for(std::map<int,std::function<void(float value)>>::iterator it = analogListeners.begin(); it != analogListeners.end(); ++it) {
-                if(it->first == i) {
-                    it->second(value);
-                }
-            }
+        for(int i = 0; i < analogListeners.size(); i++) {
+            analogListeners.at(i)(values, axisCount); 
         }
 
         int buttonCount; 
-        buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &buttonCount);
+        const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+
+        bool buttonValues[buttonCount]; 
+
+        for(int i = 0; i < buttonCount; i++) {
+            buttonValues[i] = buttons[i] == GLFW_PRESS ? true : false; 
+        }
+
+        for(int i = 0; i < digitalListeners.size(); i++) {
+            digitalListeners.at(i)(buttonValues, buttonCount); 
+        }
     }
 };
