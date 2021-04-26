@@ -1,0 +1,1 @@
+g++ -std=c++17 -I./include -o game glad.c game.cpp -Wl,--copy-dt-needed-entries -lGL -lX11 -lXxf86vm -lXrandr -lpthread -lXi -L./ -lglfw -lfreetype -lUnEqualEngine
