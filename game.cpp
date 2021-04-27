@@ -44,17 +44,13 @@ int main() {
     glm::mat4 model = glm::mat4(1);
     model = glm::translate(model, glm::vec3(1.0f, 0.0f, -5.0f)); 
 
-    glm::mat4 model2 = glm::mat4(1); 
-    model2 = glm::translate(model2, glm::vec3(10.0f, 0.0f, -5.0f)); 
-    
-    float time = 0.0; 
-
     Model cube("assets/models/cube/cube.obj");
 
     Model strangeFigure("assets/models/strangeFigure/strangeFigure.obj");
     
     Model icosahedron("assets/models/Icosahedron/icosahedron.obj"); 
 
+    Shader icosahedronShader("assets/shaders/icosahedron.vs", "assets/shaders/icosahedron.fs", "assets/shaders/icosahedron.gs");
     Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
     Text text(WIDTH, HEIGHT);
 
@@ -80,25 +76,15 @@ int main() {
         glPolygonMode(GL_FRONT, GL_LINE);
         glPolygonMode(GL_BACK, GL_LINE);
         glBindVertexArray(renderer.VAO);
-        strangeShader.use();
-        camera.setShader(&strangeShader);
-        strangeShader.setVec3("lightPos", camera.getPosition());
+
+        icosahedronShader.use();
+        camera.setShader(&icosahedronShader);
+        icosahedronShader.setVec3("lightPos", camera.getPosition());
         camera.setModel(model);
-        //strangeFigure.draw(strangeShader);
-        icosahedron.draw(strangeShader); 
 
-
-        //float y = input.buttons[7] == GLFW_PRESS ? 1.0f : input.buttons[6] == GLFW_PRESS ? -1.0f : 0.0f;
-        //camera.move(glm::vec3(input.leftStick.x, y, input.leftStick.y), glm::vec3(90.0f * input.rightStick.x * renderer.deltaTime, 90.0f * input.rightStick.y * renderer.deltaTime, 0.0f), speed);
-        std::string s = "time";
-        time = time + 1.0f * renderer.deltaTime;
-
-        defaultShader.use(); 
-        defaultShader.setFloat(s.c_str(),time);
-        camera.setShader(&defaultShader); 
-        camera.setModel(model2); 
-        cube.draw(defaultShader);
-
+        model = glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f));
+        icosahedron.draw(icosahedronShader); 
+        
         text.draw(textShader, "fps: " + std::to_string(int(1.0f / renderer.deltaTime)), 0.0f,HEIGHT - 40.0f,0.3f,glm::vec3(0.0f,1.0f,0.0f)); 
 
         glfwSwapBuffers(window.window);

@@ -21,11 +21,11 @@ void Input::removeDigitalListener(std::function<void(bool* value, int maxCount)>
 
 };
 void Input::update() {
-    int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
+    int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
     if(present == 1) {
 
         int axisCount; 
-        const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_2, &axisCount);
+        const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axisCount);
 
         float values[axisCount]; 
 
@@ -38,7 +38,7 @@ void Input::update() {
         }
 
         int buttonCount; 
-        const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &buttonCount);
+        const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
 
         bool buttonValues[buttonCount]; 
 

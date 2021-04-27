@@ -13,8 +13,7 @@ class DLLEXPORT Shader {
     public: 
         unsigned int id; //The program ID
 
-        Shader(const char* vertexPath, const char* fragmentPath); 
-
+        Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
         void use(); //Using or activating the shader
 
         //Utility uniform functions

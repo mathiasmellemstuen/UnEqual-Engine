@@ -1,4 +1,6 @@
-
 game
-
 *.exe
+*.so
+*.lib
+*.dll
+*.o

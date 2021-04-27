@@ -203,27 +203,24 @@ void Model::loadModel(std::string filePath) {
     }
     log(INFO, "Total number of indices: " + std::to_string(indices.size()));
     
-
-    ///
-
-    int i = 0; 
-    std::cout << "Size: " << indices.size() << std::endl; 
-    while(i <= indices.size() - 3) {
-        glm::vec3 a = tempVertices.at(indices.at(i)).position;
-        i++;
-        glm::vec3 b = tempVertices.at(indices.at(i)).position; 
-        i++;
-        glm::vec3 c = tempVertices.at(indices.at(i)).position; 
-        i++;
-        glm::vec3 dir = glm::cross(b - a, c - a);
-        glm::vec3 normalized = glm::normalize(dir);
-
-        std::cout << i / 3 << ": " << normalized.x << " " << normalized.y << " " << normalized.z << " " << std::endl; 
-    }
-
-
-
-    ///
+    // int i = 0; 
+    // std::cout << "Size: " << indices.size() << std::endl; 
+    // while(i <= indices.size() - 3) {
+    //     glm::vec3 a = tempVertices.at(indices.at(i)).position;
+    //     std::cout << "a: " << tempVertices.at(indices.at(i)).position.x << ":" << tempVertices.at(indices.at(i)).position.y << ":" << tempVertices.at(indices.at(i)).position.z; 
+    //     i++;
+    //     glm::vec3 b = tempVertices.at(indices.at(i)).position;
+    //             std::cout << " b: " << tempVertices.at(indices.at(i)).position.x << ":" << tempVertices.at(indices.at(i)).position.y << ":" << tempVertices.at(indices.at(i)).position.z; 
+    //     i++;
+    //     glm::vec3 c = tempVertices.at(indices.at(i)).position;
+    //     std::cout << " c: " << tempVertices.at(indices.at(i)).position.x << ":" << tempVertices.at(indices.at(i)).position.y << ":" << tempVertices.at(indices.at(i)).position.z; 
+    //     i++;
+    //     glm::vec3 dir = glm::cross(b - a, c - a);
+    //     glm::vec3 normalized = glm::normalize(dir);
+        
+    //     std::cout << " normals: " << normalized.x << " " << normalized.y << " " << normalized.z << " " << std::endl; 
+    // }
+    
     std::regex folderExpression("^.+\\/");
     std::regex_search(filePath, match, folderExpression); 
     std::vector<Texture> textures = loadMtllib((std::string)match[0] + mtllibFileName);
