@@ -53,6 +53,8 @@ int main() {
 
     Model strangeFigure("assets/models/strangeFigure/strangeFigure.obj");
     
+    Model icosahedron("assets/models/Icosahedron/icosahedron.obj"); 
+
     Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
     Text text(WIDTH, HEIGHT);
 
@@ -82,8 +84,8 @@ int main() {
         camera.setShader(&strangeShader);
         strangeShader.setVec3("lightPos", camera.getPosition());
         camera.setModel(model);
-        strangeFigure.draw(strangeShader);
-
+        //strangeFigure.draw(strangeShader);
+        icosahedron.draw(strangeShader); 
 
 
         //float y = input.buttons[7] == GLFW_PRESS ? 1.0f : input.buttons[6] == GLFW_PRESS ? -1.0f : 0.0f;
