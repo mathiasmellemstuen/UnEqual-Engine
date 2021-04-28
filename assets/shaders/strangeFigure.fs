@@ -1,15 +1,14 @@
 #version 330 core
+
 out vec4 FragColor;
 
-vec3 color = vec3(1.0, 0.4, 0.0);
 uniform vec3 lightPos;
 
+in vec3 color; 
 in vec3 normal;
 in vec3 fragPosition; 
 
 void main() {
-
-
 
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * color;
