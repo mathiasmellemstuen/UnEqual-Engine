@@ -7,6 +7,10 @@
 #include <map>
 #include <algorithm>
 
+void Input::setJoystickDevice(int device) {
+    joystickDevice = device - 1;
+    log(WARNING, "SET_JOYSTICK_DEVICE -- This feature is not fully developed."); 
+}
 void Input::addAnalogListener(std::function<void(float* values, int maxCount)> listener) {
     analogListeners.push_back(listener); 
 };
@@ -21,11 +25,11 @@ void Input::removeDigitalListener(std::function<void(bool* value, int maxCount)>
 
 };
 void Input::update() {
-    int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
+    int present = glfwJoystickPresent(joystickDevice);
     if(present == 1) {
 
         int axisCount; 
-        const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_2, &axisCount);
+        const float *axes = glfwGetJoystickAxes(joystickDevice, &axisCount);
 
         float values[axisCount]; 
 
@@ -38,7 +42,7 @@ void Input::update() {
         }
 
         int buttonCount; 
-        const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &buttonCount);
+        const unsigned char* buttons = glfwGetJoystickButtons(joystickDevice, &buttonCount);
 
         bool buttonValues[buttonCount]; 
 

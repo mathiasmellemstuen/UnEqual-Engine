@@ -21,6 +21,7 @@
 #include "src/graphics/text.h"
 #include "src/geometry/geometry.h"
 
+#define JOYSTICK 2
 #define WIDTH 1920
 #define HEIGHT 1080
 
@@ -32,6 +33,7 @@ int main() {
     log(SUCCESS, "Sucessully instantiated the window context."); 
 
     Input input;
+    input.setJoystickDevice(JOYSTICK); 
 
     //Loading shaders.
 
