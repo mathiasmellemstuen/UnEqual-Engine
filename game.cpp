@@ -79,18 +79,22 @@ int main() {
 
         icosahedronShader.use();
         camera.setShader(&icosahedronShader);
-        icosahedronShader.setVec3("lightPos", camera.getPosition());
         camera.setModel(model);
 
         model = glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f));
         icosahedron.draw(icosahedronShader); 
         
+        // strangeShader.use(); 
+        // camera.setShader(&strangeShader); 
+        // strangeShader.setVec3("lightPos", camera.getPosition()); 
+        // camera.setModel(model);
+        // cube.draw(strangeShader); 
+
         text.draw(textShader, "fps: " + std::to_string(int(1.0f / renderer.deltaTime)), 0.0f,HEIGHT - 40.0f,0.3f,glm::vec3(0.0f,1.0f,0.0f)); 
 
         glfwSwapBuffers(window.window);
         glfwPollEvents();
     };
-
     renderer.addRenderFunction(function);
     //Cleanup before terminating
     

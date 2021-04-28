@@ -1,3 +1,6 @@
 game
 *.exe
 *.o
+UnEqualEngine.a
+UnEqualEngine.dll
+UnEqualEngine.so
