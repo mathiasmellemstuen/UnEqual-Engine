@@ -19,28 +19,11 @@
 #include <time.h>
 #include "src/input/input.h"
 #include "src/graphics/text.h"
+#include "src/geometry/geometry.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
 
-Mesh generateSphereFromIcosahedron(Model icosahedron, int passes) {
-
-    std::vector<unsigned int> startingIndices = icosahedron.meshes.at(0).indices;
-    std::vector<Vertex> startingVertices = icosahedron.meshes.at(0).verticies;
-    std::vector<unsigned int> indices; 
-    std::vector<Vertex> vertices; 
-    for(int i = 0; i < startingIndices.size(); i+=3) {
-        
-        glm::vec3 v0 = startingVertices.at(startingIndices.at(i)).position;
-        glm::vec3 v1 = startingVertices.at(startingIndices.at(i + 1)).position; 
-        glm::vec3 v2 = startingVertices.at(startingIndices.at(i + 2)).position;
-
-        glm::vec3 v3 = glm::normalize(0.5f * (v0 + v1)); 
-        glm::vec3 v4 = glm::normalize(0.5f * (v1 + v2)); 
-        glm::vec3 v5 = glm::normalize(0.5f * (v2 + v0));  
-    }
-    return Mesh("Sphere", vertices, indices, std::vector<Texture>{});
-}
 int main() {
     
     //Window class
@@ -49,27 +32,19 @@ int main() {
     log(SUCCESS, "Sucessully instantiated the window context."); 
 
     Input input;
-    
-    //Shader loading 
-    Shader defaultShader ("assets/shaders/default.vs", "assets/shaders/default.fs"); 
-    Shader strangeShader("assets/shaders/strangeFigure.vs", "assets/shaders/strangeFigure.fs"); 
-    //Loading camera class
 
-    Camera camera(WIDTH, HEIGHT, &strangeShader); 
-    
+    //Loading shaders.
+
+    Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
+    Shader sphereShader("assets/shaders/sphere.vs", "assets/shaders/sphere.fs", "assets/shaders/sphere.gs"); 
+
+    //Loading camera class
+    Camera camera(WIDTH, HEIGHT, &sphereShader); 
     Renderer renderer(&window);
 
     glm::mat4 model = glm::mat4(1);
     model = glm::translate(model, glm::vec3(1.0f, 0.0f, -5.0f)); 
-
-    Model cube("assets/models/cube/cube.obj");
-
-    Model strangeFigure("assets/models/strangeFigure/strangeFigure.obj");
     
-    Model icosahedron("assets/models/Icosahedron/icosahedron.obj"); 
-
-    Shader icosahedronShader("assets/shaders/icosahedron.vs", "assets/shaders/icosahedron.fs", "assets/shaders/icosahedron.gs");
-    Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
     Text text(WIDTH, HEIGHT);
 
     float ySpeed = 0.0f; 
@@ -83,8 +58,15 @@ int main() {
     std::function<void(bool* value, int maxCount)> moveYdirection = [&](bool* values, int maxCount) {
         ySpeed = values[7] ? 1.0f : values[6] ? -1.0f : 0.0f; 
     };
+
     input.addDigitalListener(moveYdirection); 
     input.addAnalogListener(movementListener); 
+    
+    Texture grassTexture;
+    grassTexture.createFromFile("assets/textures/grass.jpg",TextureType::DIFFUSE);
+
+    Mesh sp = sphere(2);
+    sp.textures.push_back(grassTexture); 
 
     std::function<void()> function = [&](){
         
@@ -95,28 +77,23 @@ int main() {
         glPolygonMode(GL_BACK, GL_LINE);
         glBindVertexArray(renderer.VAO);
 
-        icosahedronShader.use();
-        camera.setShader(&icosahedronShader);
+        sphereShader.use();
+        camera.setShader(&sphereShader);
 
-        model = glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f));
+        model = glm::scale(glm::mat4(1.0f), glm::vec3(40.0f, 40.0f, 40.0f));
         camera.setModel(model);
-        icosahedronShader.setVec3("lightPos", camera.getPosition()); 
-        icosahedron.draw(icosahedronShader); 
+        sphereShader.setVec3("lightPos", camera.getPosition()); 
+        sp.draw(sphereShader); 
         
-        // strangeShader.use(); 
-        // camera.setShader(&strangeShader); 
-        // strangeShader.setVec3("lightPos", camera.getPosition()); 
-        // camera.setModel(model);
-        // strangeFigure.draw(strangeShader); 
-
         text.draw(textShader, "fps: " + std::to_string(int(1.0f / renderer.deltaTime)), 0.0f,HEIGHT - 40.0f,0.3f,glm::vec3(0.0f,1.0f,0.0f)); 
 
         glfwSwapBuffers(window.window);
         glfwPollEvents();
     };
+
     renderer.addRenderFunction(function);
+
     //Cleanup before terminating
-    
     renderer.start(); // This function is blocking
 
     glfwTerminate(); 
