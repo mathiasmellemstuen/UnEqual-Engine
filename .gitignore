@@ -3,4 +3,4 @@ game
 *.o
 UnEqualEngine.a
 UnEqualEngine.dll
-UnEqualEngine.so
+libUnEqualEngine.so
