@@ -99,7 +99,11 @@
         "valarray": "c",
         "variant": "c",
         "steam_api_common.h": "c",
-        "*.rh": "cpp"
+        "*.rh": "cpp",
+        "unordered_set": "cpp",
+        "future": "cpp",
+        "ranges": "cpp",
+        "stop_token": "cpp"
     },
     "files.exclude": {
         ".gitmodules": true

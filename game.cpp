@@ -23,6 +23,24 @@
 #define WIDTH 1920
 #define HEIGHT 1080
 
+Mesh generateSphereFromIcosahedron(Model icosahedron, int passes) {
+
+    std::vector<unsigned int> startingIndices = icosahedron.meshes.at(0).indices;
+    std::vector<Vertex> startingVertices = icosahedron.meshes.at(0).verticies;
+    std::vector<unsigned int> indices; 
+    std::vector<Vertex> vertices; 
+    for(int i = 0; i < startingIndices.size(); i+=3) {
+        
+        glm::vec3 v0 = startingVertices.at(startingIndices.at(i)).position;
+        glm::vec3 v1 = startingVertices.at(startingIndices.at(i + 1)).position; 
+        glm::vec3 v2 = startingVertices.at(startingIndices.at(i + 2)).position;
+
+        glm::vec3 v3 = glm::normalize(0.5f * (v0 + v1)); 
+        glm::vec3 v4 = glm::normalize(0.5f * (v1 + v2)); 
+        glm::vec3 v5 = glm::normalize(0.5f * (v2 + v0));  
+    }
+    return Mesh("Sphere", vertices, indices, std::vector<Texture>{});
+}
 int main() {
     
     //Window class

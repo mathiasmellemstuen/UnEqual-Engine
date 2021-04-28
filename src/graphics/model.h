@@ -24,8 +24,8 @@ class DLLEXPORT Model {
     public: 
         Model(std::string filePath); 
         void draw(Shader &shader);
-    private:
         std::vector<Mesh> meshes; 
+    private:
         std::string filePath;
         void loadModel(std::string filePath);
         std::vector<Texture> loadMtllib(std::string filePath);
