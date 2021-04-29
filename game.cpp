@@ -21,7 +21,7 @@
 #include "src/graphics/text.h"
 #include "src/geometry/geometry.h"
 
-#define JOYSTICK 2
+#define JOYSTICK 1
 #define WIDTH 1920
 #define HEIGHT 1080
 
@@ -36,7 +36,6 @@ int main() {
     input.setJoystickDevice(JOYSTICK); 
 
     //Loading shaders.
-
     Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
     Shader sphereShader("assets/shaders/sphere.vs", "assets/shaders/sphere.fs", "assets/shaders/sphere.gs"); 
 
@@ -67,7 +66,7 @@ int main() {
     Texture grassTexture;
     grassTexture.createFromFile("assets/textures/grass.jpg",TextureType::DIFFUSE);
 
-    Mesh sp = sphere(2);
+    Mesh sp = sphere(4);
     sp.textures.push_back(grassTexture); 
 
     std::function<void()> function = [&](){
