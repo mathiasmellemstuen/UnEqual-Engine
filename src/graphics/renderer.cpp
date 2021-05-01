@@ -76,7 +76,6 @@ void Renderer::start() {
         }
         renderFunctionsToRemove.clear(); 
 
-
         //Looping through every rendering functions and running them. 
         for (it = renderFunctions.begin(); it != renderFunctions.end(); it++) {
             it->second(); 
