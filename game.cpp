@@ -21,7 +21,7 @@
 #include "src/graphics/text.h"
 #include "src/geometry/geometry.h"
 
-#define JOYSTICK 1
+#define JOYSTICK 2
 #define WIDTH 1920
 #define HEIGHT 1080
 
