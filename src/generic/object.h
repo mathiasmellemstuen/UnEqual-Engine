@@ -1,11 +1,18 @@
+#ifndef OBJECT 
+#define OBJECT
+
+
 #include "../graphics/renderer.h"
 #include "../input/input.h"
 #include "../sharedlib.h"
-
+#include <glm/glm.hpp>
 class DLLEXPORT Object {
     public:
-        void setup(Renderer* renderer, Input* input);
-    private: 
+        Object(Renderer* renderer, Input* input);
+        glm::mat4 model;
+    protected: 
         Renderer* renderer; 
         Input* input; 
 };
+
+#endif
