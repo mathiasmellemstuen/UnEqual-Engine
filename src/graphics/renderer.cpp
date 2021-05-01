@@ -3,6 +3,8 @@
 #include "window.h"
 #include <functional>
 #include <chrono>
+#include <glm/vec4.hpp>
+#include <map>
 
 Renderer::Renderer(Window* window) {
 
@@ -39,33 +41,54 @@ Renderer::Renderer(Window* window) {
     
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); 
     glEnableVertexAttribArray(1); 
+
+    clearColor = glm::vec4(0.2f,0.3f,0.3f,1.0f); 
 };
-int Renderer::addRenderFunction(const std::function<void()> &function) {
-    renderFunctions.push_back(function); 
-    return -1; 
+void Renderer::addRenderFunction(std::string name, const std::function<void()> &function) {
+    renderFunctions.insert({name, function});
 };
-void Renderer::removeRenderFunction(int renderFunctionId) {
-    renderFunctions.erase(renderFunctions.begin() + renderFunctionId);
+void Renderer::removeRenderFunction(std::string name) {
+    renderFunctionsToRemove.push_back(name);
 };
 
 void Renderer::start() {
     log(INFO, "Starting rendering loop."); 
 
     std::chrono::high_resolution_clock::time_point lastTick = std::chrono::high_resolution_clock::now();
+    std::map<std::string, std::function<void()>>::iterator it;
 
     while(this->running && !glfwWindowShouldClose(this->window->window)) {
         //Render loop
-
         std::chrono::duration<float, std::milli> dt = std::chrono::high_resolution_clock::now() - lastTick;
         lastTick = std::chrono::high_resolution_clock::now(); 
         deltaTime = dt.count() / 1000;
+        
+        glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w); 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+        glPolygonMode(GL_FRONT, GL_LINE);
+        glPolygonMode(GL_BACK, GL_LINE);
+        glBindVertexArray(VAO);
+
+
+        //Removing deleted render functions
+        for(int i = 0; i < renderFunctionsToRemove.size(); i++) {
+            renderFunctions.erase(renderFunctionsToRemove.at(i));
+        }
+        renderFunctionsToRemove.clear(); 
+
 
         //Looping through every rendering functions and running them. 
-        for(std::function<void()> function : renderFunctions) {
-            function();
+        for (it = renderFunctions.begin(); it != renderFunctions.end(); it++) {
+            it->second(); 
         }
+
+        glfwSwapBuffers(window->window);
+        glfwPollEvents();
     }
+
+
 }
+
 void Renderer::stop() {
     this->running = false; 
 };

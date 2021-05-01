@@ -58,6 +58,10 @@ int main() {
     
     std::function<void(bool* value, int maxCount)> moveYdirection = [&](bool* values, int maxCount) {
         ySpeed = values[7] ? 1.0f : values[6] ? -1.0f : 0.0f; 
+
+        if(values[7] == true) {
+            renderer.removeRenderFunction("Hello"); 
+        }
     };
 
     input.addDigitalListener(moveYdirection); 
@@ -72,11 +76,6 @@ int main() {
     std::function<void()> function = [&](){
         
         input.update();
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-        glPolygonMode(GL_FRONT, GL_LINE);
-        glPolygonMode(GL_BACK, GL_LINE);
-        glBindVertexArray(renderer.VAO);
 
         sphereShader.use();
         camera.setShader(&sphereShader);
@@ -88,11 +87,9 @@ int main() {
         
         text.draw(textShader, "fps: " + std::to_string(int(1.0f / renderer.deltaTime)), 0.0f,HEIGHT - 40.0f,0.3f,glm::vec3(0.0f,1.0f,0.0f)); 
 
-        glfwSwapBuffers(window.window);
-        glfwPollEvents();
     };
 
-    renderer.addRenderFunction(function);
+    renderer.addRenderFunction("Hello", function);
 
     //Cleanup before terminating
     renderer.start(); // This function is blocking
