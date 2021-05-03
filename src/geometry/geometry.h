@@ -1,4 +1,6 @@
 #include "../graphics/mesh.h"
+#include <vector>
+#include <glm/vec3.hpp>
 
 #include "../sharedlib.h"
 

@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <ctime>
+#include <glm/vec3.hpp>
 
 #include "../sharedlib.h"
 
@@ -16,5 +17,6 @@ enum LogLevel {
 
 
 void DLLEXPORT log(LogLevel logLevel, std::string text);
+void DLLEXPORT log(LogLevel logLevel, glm::vec3 vec);
 
 #endif

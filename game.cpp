@@ -37,7 +37,7 @@ int main() {
 
     //Loading shaders.
     Shader textShader("assets/shaders/text.vs", "assets/shaders/text.fs"); 
-    Shader sphereShader("assets/shaders/sphere.vs", "assets/shaders/sphere.fs", "assets/shaders/sphere.gs"); 
+    Shader sphereShader("assets/shaders/sphere.vs", "assets/shaders/sphere.fs"); 
 
     //Loading camera class
     Camera camera(WIDTH, HEIGHT, &sphereShader); 
@@ -58,10 +58,6 @@ int main() {
     
     std::function<void(bool* value, int maxCount)> moveYdirection = [&](bool* values, int maxCount) {
         ySpeed = values[7] ? 1.0f : values[6] ? -1.0f : 0.0f; 
-
-        if(values[7] == true) {
-            renderer.removeRenderFunction("Hello"); 
-        }
     };
 
     input.addDigitalListener(moveYdirection); 

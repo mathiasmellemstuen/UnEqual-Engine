@@ -7,7 +7,8 @@
 #include <vector>
 #include "../graphics/mesh.h"
 #include "../graphics/texture.h"
-
+#include <vector>
+#include "../log/log.h"
 
 Mesh icosahedron() {
 
@@ -48,7 +49,7 @@ Mesh icosahedron() {
         4,8,0
     };
 
-    std::vector<Texture> textures = {}; 
+    std::vector<Texture> textures = {};
     return Mesh("Icosahedron", verticies, indices, textures);
 };
 
@@ -94,6 +95,13 @@ Mesh calculateIcosahedronRounding(Mesh from) {
         vertex3.position = v3; 
         vertex4.position = v4; 
         vertex5.position = v5; 
+
+        vertex0.normal = glm::normalize(vertex0.position); 
+        vertex1.normal = glm::normalize(vertex1.position);  
+        vertex2.normal = glm::normalize(vertex2.position); 
+        vertex3.normal = glm::normalize(vertex3.position); 
+        vertex4.normal = glm::normalize(vertex4.position); 
+        vertex5.normal = glm::normalize(vertex5.position); 
 
         vertices.push_back(vertex0); 
         vertices.push_back(vertex1); 

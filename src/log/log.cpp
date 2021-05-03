@@ -26,3 +26,6 @@ void log(LogLevel logLevel, std::string text) {
     std::cout << logLevelString << "[" << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec  << "]" << "\e[0m" << " " << text << std::endl;
 
 }
+void log(LogLevel logLevel, glm::vec3 vec) {
+    log(logLevel, "x: " + std::to_string(vec.x) + " y: " + std::to_string(vec.y) + " z: " + std::to_string(vec.z));
+}
